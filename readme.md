@@ -1,4 +1,4 @@
-<p align="center"><img src="https://gitlab.com/redmints/XRS_Ide/raw/master/public/front/dist/img/logo_max_b.png" width="400"></p>
+<p align="center"><img src="https://gitlab.com/redmints/XRS_Ide/raw/master/public/dist/img/logo_max_b.png" width="400"></p>
 
 ## Bienvenue
 
