@@ -11,6 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Accueil@getForm');
+Route::post('/', 'Accueil@postForm');
+
+Route::get('projet', 'Projet@getForm');
+Route::post('projet', 'Projet@postForm');
+
+Route::get('ide', 'Ide@getForm');
+Route::post('ide', 'Ide@postForm');
+
+Route::get('login', 'Login@getForm');
+Route::post('login', 'Login@postForm');
+
+Route::get('register', 'Register@getForm');
+Route::post('register', 'Register@postForm');
