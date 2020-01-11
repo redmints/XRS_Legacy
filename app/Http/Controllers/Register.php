@@ -22,24 +22,34 @@ class Register extends Controller
         $password_confirmation = $request->input('password_confirmation');
 
         $cle = Cle::where('valeur', $cle)->first();
-        if(isset($cle))
+        $email_verification = Utilisateur::where('email', $email)->first();
+        if(!isset($email_verification))
         {
-            $id_utilisateur = $cle["id_utilisateur"];
-            if($password == $password_confirmation)
+            if(isset($cle))
             {
-                $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
-                $utilisateur->email = $email;
-                $utilisateur->password = $password;
-                $utilisateur->save();
+                $id_utilisateur = $cle["id_utilisateur"];
+                if($password == $password_confirmation)
+                {
+                    $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
+                    $utilisateur->email = $email;
+                    $utilisateur->password = $password;
+                    $utilisateur->save();
+
+                    $cle = Cle::where('valeur', $cle["valeur"])->delete();
+                }
+                else
+                {
+                    $erreur = 1;
+                }
             }
             else
             {
-                $erreur = 1;
+                $erreur = 2;
             }
         }
         else
         {
-            $erreur = 2;
+            $erreur = 3;
         }
         if($erreur == 0)
         {

@@ -8,7 +8,7 @@
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body">
-      @if (isset($erreur) && $erreur == 2)
+      @if (isset($erreur) && $erreur == 4)
           <div class="callout callout-danger">
           <h4>Erreur</h4>
           <p>Vos identifiants sont incorrects</p>

@@ -17,6 +17,9 @@
             @if ($erreur == 2)
                 <p>La clé que vous avez saisie est incorrecte</p>
             @endif
+            @if ($erreur == 3)
+                <p>L'email que vous avez saisi existe déjà</p>
+            @endif
             </div>
         @endif
         <p class="login-box-msg">Inscrivez-vous pour accéder à la plateforme</p>

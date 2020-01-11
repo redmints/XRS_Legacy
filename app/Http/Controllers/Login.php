@@ -28,11 +28,11 @@ class Login extends Controller
         if($password == $utilisateur["password"])
         {
             Session::put('id_utilisateur', $utilisateur["id"]);
-            return view('accueil');
+            return view('accueil', compact('utilisateur'));
         }
         else
         {
-            $erreur = 2;
+            $erreur = 4;
         }
         return view('login', compact('erreur'));
     }

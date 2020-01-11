@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use App\Utilisateur;
 
 class Accueil extends Controller
 {
@@ -12,7 +13,8 @@ class Accueil extends Controller
         $id_utilisateur = Session::get('id_utilisateur');
         if(isset($id_utilisateur))
         {
-            return view('accueil');
+            $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
+            return view('accueil', compact('utilisateur'));
         }
         else
         {

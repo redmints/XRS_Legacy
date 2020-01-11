@@ -46,7 +46,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Mathias Hanna</span>
+              <span class="hidden-xs">{{$utilisateur["prenom"]}} {{$utilisateur["nom"]}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -54,8 +54,8 @@
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Mathias Hanna
-                  <small>mathias.hanna@xeyrus.com</small>
+                  {{$utilisateur["prenom"]}} {{$utilisateur["nom"]}}
+                  <small>{{$utilisateur["email"]}}</small>
                 </p>
               </li>
 
@@ -65,7 +65,7 @@
                   <a href="#" class="btn btn-default btn-flat">Compte</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Déconnexion</a>
+                  <a href="login" class="btn btn-default btn-flat">Déconnexion</a>
                 </div>
               </li>
             </ul>
