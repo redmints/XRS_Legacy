@@ -1,4 +1,4 @@
-<@extends('templateLogin')
+@extends('templateLogin')
 
 @section('contenu')
     <title>Xeyrus | Connexion</title>
@@ -8,7 +8,7 @@
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body">
-      @if (isset($erreur) && $erreur != 0)
+      @if (isset($erreur) && $erreur == 2)
           <div class="callout callout-danger">
           <h4>Erreur</h4>
           <p>Vos identifiants sont incorrects</p>
@@ -24,11 +24,11 @@
 
         <form action="login" method="post">
           <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="Email">
+            <input type="email" class="form-control" name="email" placeholder="Email">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Mot de passe">
+            <input type="password" class="form-control" name="password" placeholder="Mot de passe">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
@@ -36,6 +36,7 @@
               <button type="submit" class="btn btn-primary btn-block btn-flat">Connexion</button>
             </div>
           </div>
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
         </form>
         <br>
         <a href="#">Mot de passe oublié</a><br>
