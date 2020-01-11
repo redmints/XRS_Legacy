@@ -8,6 +8,18 @@
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body">
+      @if (isset($erreur) && $erreur != 0)
+          <div class="callout callout-danger">
+          <h4>Erreur</h4>
+          <p>Vos identifiants sont incorrects</p>
+          </div>
+      @endif
+      @if (isset($erreur) && $erreur == 0)
+          <div class="callout callout-success">
+          <h4>Votre compte à bien été créé</h4>
+          <p>Merci de vous identifier</p>
+          </div>
+      @endif
         <p class="login-box-msg">Connectez-vous à la plateforme</p>
 
         <form action="login" method="post">
