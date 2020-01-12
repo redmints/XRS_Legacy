@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use App\Utilisateur;
+use Config;
 
 class Ide extends Controller
 {
     public function getForm()
     {
+        $constants = Config::get('constants');
         $id_utilisateur = Session::get('id_utilisateur');
         if(isset($id_utilisateur))
         {
@@ -24,6 +26,6 @@ class Ide extends Controller
 
     public function postForm()
     {
-
+        $constants = Config::get('constants');
     }
 }

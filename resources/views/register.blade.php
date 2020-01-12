@@ -11,13 +11,13 @@
         @if (isset($erreur))
             <div class="callout callout-danger">
             <h4>Erreur</h4>
-            @if ($erreur == 1)
+            @if ($erreur == $constants["NOT_SAME_PASSWORD"])
                 <p>Les mots de passe ne sont pas identiques</p>
             @endif
-            @if ($erreur == 2)
+            @if ($erreur == $constants["INVALID_KEY"])
                 <p>La clé que vous avez saisie est incorrecte</p>
             @endif
-            @if ($erreur == 3)
+            @if ($erreur == $constants["INVALID_EMAIL"])
                 <p>L'email que vous avez saisi existe déjà</p>
             @endif
             </div>

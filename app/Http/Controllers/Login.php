@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Utilisateur;
 use Session;
+use Config;
 
 class Login extends Controller
 {
     public function getForm()
     {
+        $constants = Config::get('constants');
         $id_utilisateur = Session::get('id_utilisateur');
         if(isset($id_utilisateur))
         {
@@ -20,7 +22,8 @@ class Login extends Controller
 
     public function postForm(Request $request)
     {
-        $erreur = 0;
+        $constants = Config::get('constants');
+        $erreur = $constants["VALID"];
         $email = $request->input('email');
         $password = $request->input('password');
 
@@ -28,12 +31,12 @@ class Login extends Controller
         if($password == $utilisateur["password"])
         {
             Session::put('id_utilisateur', $utilisateur["id"]);
-            return view('accueil', compact('utilisateur'));
+            return view('accueil', compact('utilisateur', 'constants'));
         }
         else
         {
-            $erreur = 4;
+            $erreur = $constants["INVALID_PASSWORD"];
         }
-        return view('login', compact('erreur'));
+        return view('login', compact('erreur', 'constants'));
     }
 }

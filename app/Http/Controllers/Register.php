@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cle;
 use App\Utilisateur;
+use Config;
 
 class Register extends Controller
 {
     public function getForm()
     {
+        $constants = Config::get('constants');
         return view('register');
     }
 
     public function postForm(Request $request)
     {
-        $erreur = 0;
+        $constants = Config::get('constants');
+        $erreur = $constants["VALID"];
         $cle = $request->input('cle');
         $email = $request->input('email');
         $password = $request->input('password');
@@ -39,25 +42,26 @@ class Register extends Controller
                 }
                 else
                 {
-                    $erreur = 1;
+                    $erreur = $constants["NOT_SAME_PASSWORD"];
                 }
             }
             else
             {
-                $erreur = 2;
+                $erreur = $constants["INVALID_KEY"];
             }
         }
         else
         {
-            $erreur = 3;
+            $erreur = $constants["INVALID_EMAIL"];
         }
-        if($erreur == 0)
+
+        if($erreur == $constants["VALID"])
         {
-            return view('login', compact('erreur'));
+            return view('login', compact('erreur', 'constants'));
         }
         else
         {
-            return view('register', compact('erreur'));
+            return view('register', compact('erreur', 'constants'));
         }
     }
 }
