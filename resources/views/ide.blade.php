@@ -28,8 +28,6 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-    <!-- Main content -->
-    <section class="content container-fluid">
 
       <link rel="stylesheet" href="codemirror/lib/codemirror.css">
       <link rel="stylesheet" href="codemirror/theme/dracula.css">
@@ -61,7 +59,7 @@
         });
       </script>
 
-    </section>
+      <iframe width="100%" height="330" frameborder="0" allowfullscreen src="http://localhost:1664/?hostname=localhost&username=Mathias%20Hanna&password=xxx"></iframe>
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->

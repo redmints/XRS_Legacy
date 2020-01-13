@@ -5,24 +5,39 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        PHP Terminale S3
-        <small>F. Hoguin</small>
-      </h1>
-    </section>
+
 
     <!-- Main content -->
     <section class="content container-fluid">
-      <a class="btn btn-app" href="ide">
-        <i class="fa fa-code"></i> IDE
-      </a>
-      <a class="btn btn-app">
-        <i class="fa fa-list"></i> Evaluations
-      </a>
-      <a class="btn btn-app">
-        <i class="fa fa-cogs"></i> Paramètres
-      </a>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Liste de vos classrooms</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                  <tr>
+                    <th>Nom</th>
+                    <th>Rôle</th>
+                    <th>Créateur</th>
+                  </tr>
+                  @foreach ($data as $projet)
+                      <tr onclick="document.location = 'projet?id={{$projet["id"]}}';">
+                        <td>{{$projet["nom"]}}</td>
+                        <td>{{$projet["role"]}}</td>
+                        <td>{{$projet["createur"]}}</td>
+                      </tr>
+                  @endforeach
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+        </div>
+
     </section>
     <!-- /.content -->
     </div>

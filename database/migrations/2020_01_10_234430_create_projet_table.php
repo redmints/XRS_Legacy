@@ -18,7 +18,7 @@ class CreateProjetTable extends Migration
             $table->timestamps();
             $table->string('nom');
             $table->integer('id_docker');
-            $table->enum('type', array('1', '2'));
+            $table->enum('type', array('9', '10'));
         });
     }
 

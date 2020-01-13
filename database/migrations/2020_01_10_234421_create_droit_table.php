@@ -18,7 +18,7 @@ class CreateDroitTable extends Migration
             $table->timestamps();
             $table->integer('id_utilisateur');
             $table->integer('id_projet');
-            $table->enum('role', array('1', '2'));
+            $table->enum('role', array('7', '8'));
         });
     }
 
