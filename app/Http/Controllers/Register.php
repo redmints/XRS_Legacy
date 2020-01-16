@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Cle;
 use App\Utilisateur;
 use Config;
+use Hash;
 
 class Register extends Controller
 {
@@ -47,7 +48,7 @@ class Register extends Controller
                     //Création du nouvel utilisateur
                     $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
                     $utilisateur->email = $email; //Affectation de l'email donné
-                    $utilisateur->password = $password; //Affectation du password donné
+                    $utilisateur->password = hash('tiger192,3', $password); //Hash puis affectation du password donné
                     //Enregistrement en base de données
                     $utilisateur->save();
                     //Puis effacement de la clé utilisée pour s'inscrire

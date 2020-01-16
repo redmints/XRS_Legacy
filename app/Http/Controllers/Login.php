@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Utilisateur;
 use Session;
 use Config;
+use Hash;
 
 class Login extends Controller
 {
@@ -37,7 +38,7 @@ class Login extends Controller
         //On récupère l'utilisateur avec son email
         $utilisateur = Utilisateur::where('email', $email)->first();
         //Si son password correspond avec celui dans la base de données
-        if($password == $utilisateur["password"])
+        if(hash('tiger192,3', $password) == $utilisateur["password"])
         {
             //On lui ouvre une session
             Session::put('id_utilisateur', $utilisateur["id"]);
