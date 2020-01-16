@@ -21,7 +21,7 @@
         <i class="fa fa-list"></i> Evaluations
       </a>
       @if ($utilisateur->id == $createur->id)
-          <a class="btn btn-app">
+          <a class="btn btn-app" href="settings?id_projet={{$projet->id}}">
             <i class="fa fa-cogs"></i> Paramètres
           </a>
       @endif

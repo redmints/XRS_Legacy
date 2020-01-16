@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Config;
 use Session;
 use App\Utilisateur;
-use App\M_Projet;
-use App\Droit;
-use Config;
 
-class Projet extends Controller
+class Settings extends Controller
 {
     public function getForm()
     {
@@ -25,12 +23,8 @@ class Projet extends Controller
                 //Récupération des infos de l'utilisateur
                 $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
                 $id_projet = $_GET["id_projet"];
-                $projet = M_Projet::where('id', $id_projet)->first();
-                $droit = Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->first();
-                $droit_createur = Droit::where('id_projet', $projet->id)->where('role', $constants["ROLE_ADMIN"])->first();
-                $createur = Utilisateur::where('id', $droit_createur->id_utilisateur)->first();
-                //Redirection vers la vue projet
-                return view('projet', compact('utilisateur', 'projet', 'droit', 'createur', 'constants'));
+
+                return view('settings', compact('utilisateur'));
             }
             else
             {
@@ -44,7 +38,7 @@ class Projet extends Controller
         }
     }
 
-    public function postForm()
+    public function postForm(Request $request)
     {
         //Déclaration des constantes
         $constants = Config::get('constants');

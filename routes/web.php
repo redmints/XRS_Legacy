@@ -28,3 +28,6 @@ Route::post('register', 'Register@postForm');
 
 Route::get('nouveau-projet', 'NouveauProjet@getForm');
 Route::post('nouveau-projet', 'NouveauProjet@postForm');
+
+Route::get('settings', 'Settings@getForm');
+Route::post('settings', 'Settings@postForm');
