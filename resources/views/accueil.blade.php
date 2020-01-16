@@ -9,6 +9,8 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
+        <a type="button" href="nouveau-projet" class="btn btn-success btn-sm">Nouveau</a>
+        <br><br>
         <div class="row">
           <div class="col-xs-12">
             <div class="box">
@@ -26,7 +28,14 @@
                   @foreach ($data as $projet)
                       <tr onclick="document.location = 'projet?id={{$projet["id"]}}';">
                         <td>{{$projet["nom"]}}</td>
-                        <td>{{$projet["role"]}}</td>
+                        <td>
+                            @if ($projet['role'] == 7)
+                                Propriétaire
+                            @endif
+                            @if ($projet['role'] == 8)
+                                Développeur
+                            @endif
+                        </td>
                         <td>{{$projet["createur"]}}</td>
                       </tr>
                   @endforeach

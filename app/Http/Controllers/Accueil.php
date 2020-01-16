@@ -34,7 +34,7 @@ class Accueil extends Controller
                 //Récupération des infos du projet de l'itération
                 $projet = Projet::where('id', $droits[$i]["id_projet"])->first();
                 //Puis récupération des droits du créateur pour avoir son id
-                $droit_createur = Droit::where('id_projet', $projet["id"])->where('role', '1')->first();
+                $droit_createur = Droit::where('id_projet', $projet["id"])->where('role', $constants["ROLE_ADMIN"])->first();
                 //Pour enfin finir par avoir les infos du créateur
                 $createur = Utilisateur::where('id', $droit_createur["id_utilisateur"])->first();
 
