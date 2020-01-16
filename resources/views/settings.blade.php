@@ -16,11 +16,11 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <form role="form" action="nouveau-projet" method="post">
+          <form role="form" action="settings?id_projet={{$projet->id}}" method="post">
             <div class="box-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">Nom</label>
-                <input class="form-control" name="nom" placeholder="Nom de l'utilisateur">
+                <input type="email" class="form-control" name="email" placeholder="Email de l'utilisateur">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Rôle</label>
@@ -45,6 +45,44 @@
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
           </form>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Liste des participants</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                  <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Action</th>
+                  </tr>
+                  @foreach ($data as $participant)
+                      <tr>
+                        <td>{{$participant["prenom"]}} {{$participant["nom"]}}</td>
+                        <td>{{$participant["email"]}}</td>
+                        <td>
+                            @if ($participant['role'] == $constants["ROLE_ADMIN"])
+                                Administrateur
+                            @endif
+                            @if ($participant['role'] == $constants["ROLE_DEV"])
+                                Développeur
+                            @endif
+                        </td>
+                        <td><button type="button" class="btn btn-sm btn-danger">Supprimer</button></td>
+                      </tr>
+                  @endforeach
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
         </div>
         <!-- /.box -->
 
