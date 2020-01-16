@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Utilisateur;
 use App\Droit;
-use App\Projet;
+use App\M_Projet;
 use Config;
 
 class Accueil extends Controller
@@ -32,7 +32,7 @@ class Accueil extends Controller
                 //Préparation des variables
                 $droit = $droits[$i]; //Droits sur le projet de l'itération
                 //Récupération des infos du projet de l'itération
-                $projet = Projet::where('id', $droits[$i]["id_projet"])->first();
+                $projet = M_Projet::where('id', $droits[$i]["id_projet"])->first();
                 //Puis récupération des droits du créateur pour avoir son id
                 $droit_createur = Droit::where('id_projet', $projet["id"])->where('role', $constants["ROLE_ADMIN"])->first();
                 //Pour enfin finir par avoir les infos du créateur
@@ -47,7 +47,7 @@ class Accueil extends Controller
                 $data[$i] = $iteration; //Ajout au tableau de retour
             }
             //Redirection vers la vue accueil
-            return view('accueil', compact('utilisateur', 'data'));
+            return view('accueil', compact('utilisateur', 'data', 'constants'));
         }
         else
         {

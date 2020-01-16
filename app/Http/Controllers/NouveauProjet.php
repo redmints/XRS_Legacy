@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Config;
 use Session;
 use App\Utilisateur;
-use App\Projet;
+use App\M_Projet;
 use App\Droit;
 
 class NouveauProjet extends Controller
@@ -48,7 +48,7 @@ class NouveauProjet extends Controller
             $type = $constants["TYPE_CLASSROOM"];
         }
 
-        $projet = new Projet;
+        $projet = new M_Projet;
         $projet->nom = $nom;
         $projet->id_port = '1';
         $projet->type = $type;

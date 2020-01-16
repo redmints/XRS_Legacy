@@ -26,13 +26,13 @@
                     <th>Créateur</th>
                   </tr>
                   @foreach ($data as $projet)
-                      <tr onclick="document.location = 'projet?id={{$projet["id"]}}';">
+                      <tr onclick="document.location = 'projet?id_projet={{$projet["id"]}}';">
                         <td>{{$projet["nom"]}}</td>
                         <td>
-                            @if ($projet['role'] == 7)
+                            @if ($projet['role'] == $constants["ROLE_ADMIN"])
                                 Propriétaire
                             @endif
-                            @if ($projet['role'] == 8)
+                            @if ($projet['role'] == $constants["ROLE_DEV"])
                                 Développeur
                             @endif
                         </td>

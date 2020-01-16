@@ -7,8 +7,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        PHP Terminale S3
-        <small>F. Hoguin</small>
+        {{$projet->nom}}
+        <small>{{$createur->prenom}} {{$createur->nom}}</small>
       </h1>
     </section>
 
@@ -20,9 +20,11 @@
       <a class="btn btn-app">
         <i class="fa fa-list"></i> Evaluations
       </a>
-      <a class="btn btn-app">
-        <i class="fa fa-cogs"></i> Paramètres
-      </a>
+      @if ($utilisateur->id == $createur->id)
+          <a class="btn btn-app">
+            <i class="fa fa-cogs"></i> Paramètres
+          </a>
+      @endif
     </section>
     <!-- /.content -->
     </div>
