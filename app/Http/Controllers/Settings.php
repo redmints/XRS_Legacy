@@ -34,6 +34,7 @@ class Settings extends Controller
                     $droit = $droits[$i]; //Droits sur le projet de l'itération
                     $developpeur = Utilisateur::where('id', $droit["id_utilisateur"])->first();
                     $iteration = array(); //Déclaration du tableau de l'itération
+                    $iteration["id"] = $developpeur->id;
                     $iteration["nom"] = $developpeur->nom;
                     $iteration["prenom"] = $developpeur->prenom;
                     $iteration["email"] = $developpeur->email;
@@ -59,11 +60,24 @@ class Settings extends Controller
         //Déclaration des constantes
         $constants = Config::get('constants');
 
+        $id_projet = $request->input('id_projet');
+        $id_utilisateur = $request->input('id_utilisateur');
+        $action = $request->input('action');
+
+        if(!empty($id_projet) && !empty($id_utilisateur) && !empty($action))
+        {
+            if($action == "delete")
+            {
+                Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->delete();
+            }
+            return redirect('settings?id_projet='.$id_projet);
+        }
+
         $email = $request->input('email'); //Email donné dans le formulaire
         $utilisateur = Utilisateur::where('email', $email)->first();
         if(isset($utilisateur))
         {
-            if(isset($_GET["id_projet"]) && !empty($_GET["id_projet"]))
+            if(!empty($_GET["id_projet"]))
             {
                 $droit = new Droit;
                 $droit->id_utilisateur = $utilisateur->id;

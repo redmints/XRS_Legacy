@@ -1,7 +1,7 @@
 @extends('templateClassique')
 
 @section('contenu')
-    <title>Xeyrus | Nouveau Projet</title>
+    <title>Xeyrus | Paramètres</title>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -74,7 +74,19 @@
                                 Développeur
                             @endif
                         </td>
-                        <td><button type="button" class="btn btn-sm btn-danger">Supprimer</button></td>
+                        <td>
+                            @if ($participant['id'] != $utilisateur->id)
+                                <form role="form" action="settings?id_projet={{$projet->id}}" method="post">
+                                    <input type="hidden" name="id_projet" value="{{$projet->id}}">
+                                    <input type="hidden" name="id_utilisateur" value="{{$participant["id"]}}">
+                                    <input type="hidden" name="action" value="delete">
+                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                            @else
+                                <button type="button" class="btn btn-sm btn-disabled">Supprimer</button>
+                            @endif
+                        </td>
                       </tr>
                   @endforeach
                 </table>
