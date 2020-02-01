@@ -1,0 +1,3 @@
+test:
+    script:
+        - ./XRS_test.sh
