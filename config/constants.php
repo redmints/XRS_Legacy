@@ -16,4 +16,5 @@ return [
     'ACCESS_DENIED' => '12',
     'INVALID_PROJECT' => '13',
     'ALREADY_AUTHORIZED' => '14',
+    'UNKNOWN_USER' => '15',
 ];

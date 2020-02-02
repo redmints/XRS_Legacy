@@ -115,7 +115,7 @@ class Settings extends Controller
         $email = $request->input('email');
         //Récupération des infos de l'utilisateur donné
         $utilisateur = Utilisateur::where('email', $email)->first();
-        //Si l'utilisateur est connecté
+        //Si l'utilisateur demandé existe
         if(isset($utilisateur))
         {
             //Et si le projet est spécifié
@@ -163,8 +163,8 @@ class Settings extends Controller
         }
         else
         {
-            //Redirection vers le login
-            return redirect('/');
+            //Redirection vers l'accueil avec l'erreur, en cas d'échec
+            return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["UNKNOWN_USER"]);
         }
     }
 }

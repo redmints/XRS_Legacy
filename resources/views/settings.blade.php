@@ -15,6 +15,13 @@
             <p>Cet utilisateur est déjà enregistré</p>
             </div>
         @endif
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["UNKNOWN_USER"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Cet utilisateur n'existe pas</p>
+            </div>
+        @endif
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
