@@ -111,10 +111,8 @@ class Settings extends Controller
             return redirect('settings?id_projet='.$id_projet);
         }
 
-        //Email donné dans le formulaire
-        $email = $request->input('email');
         //Récupération des infos de l'utilisateur donné
-        $utilisateur = Utilisateur::where('email', $email)->first();
+        $utilisateur = Utilisateur::where('id', $request->input('email_utilisateur'))->first();
         //Si l'utilisateur demandé existe
         if(isset($utilisateur))
         {

@@ -31,3 +31,5 @@ Route::post('nouveau-projet', 'NouveauProjet@postForm');
 
 Route::get('settings', 'Settings@getForm');
 Route::post('settings', 'Settings@postForm');
+
+Route::get('getUtilisateurs', 'Utils@getUtilisateurs');

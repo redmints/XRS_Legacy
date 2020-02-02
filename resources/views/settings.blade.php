@@ -1,6 +1,7 @@
 @extends('templateClassique')
 
 @section('contenu')
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <title>Xeyrus | Paramètres</title>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -31,25 +32,25 @@
           <!-- form start -->
           <form role="form" action="settings?id_projet={{$projet->id}}" method="post">
             <div class="box-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Nom</label>
-                <input type="email" class="form-control" name="email" placeholder="Email de l'utilisateur">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Rôle</label>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" value="option1" checked>
-                    Administrateur
-                  </label>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Utilisateur</label>
+                    <select class="form-control" id="email_utilisateur" name="email_utilisateur"></select>
                 </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" value="option2">
-                    Développeur
-                  </label>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Rôle</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" value="option1" checked>
+                            Administrateur
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" value="option2">
+                            Développeur
+                        </label>
+                    </div>
                 </div>
-              </div>
             </div>
             <!-- /.box-body -->
 
@@ -115,4 +116,28 @@
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    <!-- jQuery 3 -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/select2/dist/js/select2.min.js" defer></script>
+    <script type="text/javascript" src="bower_components/select2/dist/js/i18n/fr.js" defer></script>
+    <script>
+    $(function () {
+      $("#email_utilisateur").select2({
+        language: "fr",
+        allowClear: true,
+        ajax: {
+          url: "{{ asset('getUtilisateurs') }}",
+          dataType: "json",
+          processResults: function (data) {
+            return {
+              results: data
+            };
+          }
+        }
+      });
+    });
+    </script>
+
+
 @endsection
