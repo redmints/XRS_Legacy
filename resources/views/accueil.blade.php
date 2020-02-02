@@ -25,42 +25,54 @@
             <p>Ce projet n'existe pas</p>
             </div>
         @endif
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Liste de vos classrooms</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                  <tr>
-                    <th>Nom</th>
-                    <th>Rôle</th>
-                    <th>Créateur</th>
-                  </tr>
-                  @foreach ($data as $projet)
-                      <tr onclick="document.location = 'projet?id_projet={{$projet["id"]}}';">
-                        <td>{{$projet["nom"]}}</td>
-                        <td>
-                            @if ($projet['role'] == $constants["ROLE_ADMIN"])
-                                Propriétaire
-                            @endif
-                            @if ($projet['role'] == $constants["ROLE_DEV"])
-                                Développeur
-                            @endif
-                        </td>
-                        <td>{{$projet["createur"]}}</td>
+        @if (sizeof($data) != 0)
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Liste de vos classrooms</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                      <tr>
+                        <th>Nom</th>
+                        <th>Rôle</th>
+                        <th>Créateur</th>
                       </tr>
-                  @endforeach
-                </table>
+                      @foreach ($data as $projet)
+                          <tr onclick="document.location = 'projet?id_projet={{$projet["id"]}}';">
+                            <td>{{$projet["nom"]}}</td>
+                            <td>
+                                @if ($projet['role'] == $constants["ROLE_ADMIN"])
+                                    Propriétaire
+                                @endif
+                                @if ($projet['role'] == $constants["ROLE_DEV"])
+                                    Développeur
+                                @endif
+                            </td>
+                            <td>{{$projet["createur"]}}</td>
+                          </tr>
+                      @endforeach
+                    </table>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
               </div>
-              <!-- /.box-body -->
             </div>
-            <!-- /.box -->
+        @else
+            <div class="row">
+              <div class="col-xs-12">
+                  <center>
+                  <img src="dist/img/nothing.png" width="100px"></img>
+                  <h1>Vous n'avez aucun projet.</h1>
+                  <h1>Vous pouvez en créer un nouveau.</h1>
+              </center>
+              </div>
           </div>
-        </div>
+
+        @endif
 
     </section>
     <!-- /.content -->
