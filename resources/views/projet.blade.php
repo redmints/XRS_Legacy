@@ -17,9 +17,11 @@
       <a class="btn btn-app" href="ide">
         <i class="fa fa-code"></i> IDE
       </a>
-      <a class="btn btn-app">
-        <i class="fa fa-list"></i> Evaluations
-      </a>
+      @if ($projet->type == $constants["TYPE_CLASSROOM"])
+          <a class="btn btn-app">
+            <i class="fa fa-list"></i> Evaluations
+          </a>
+      @endif
       @if ($utilisateur->id == $createur->id)
           <a class="btn btn-app" href="settings?id_projet={{$projet->id}}">
             <i class="fa fa-cogs"></i> Paramètres

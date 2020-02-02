@@ -27,6 +27,7 @@ class NouveauProjet extends Controller
         }
         else
         {
+            //Sinon, on le redirige vers la page de connexion
             return view('login');
         }
     }
@@ -35,34 +36,51 @@ class NouveauProjet extends Controller
     {
         //Déclaration des constantes
         $constants = Config::get('constants');
+        //Récupération de l'id utilisateur
+        $id_utilisateur = Session::get('id_utilisateur');
+        //Récupération des infos de l'utilisateur
+        $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
 
-        $nom = $request->input('nom');
-        $type = $request->input('optionsRadios');
+        $nom = $request->input('nom'); //Récupération de la valeur du nom du projet
+        $type = $request->input('optionsRadios'); //Récupération de la valeur du type du projet
 
+        //Si l'utilisateur a choisi la première option
         if($type == "option1")
         {
+            //C'est que c'est un projet
             $type = $constants["TYPE_PROJET"];
         }
         else
         {
+            //Sinon, c'est une classroom
             $type = $constants["TYPE_CLASSROOM"];
         }
 
-        $projet = new M_Projet;
-        $projet->nom = $nom;
-        $projet->id_port = '1';
-        $projet->type = $type;
-        $projet->save();
+        //Maintenant qu'on a toutes les infos pour la création du projet
+        $projet = new M_Projet; //On instancie un objet de type Projet
+        $projet->nom = $nom; //On lui affecte son nom
+        $projet->id_port = '1'; //Le port par défaut de son docker
 
-        //Récupération de l'id utilisateur
-        $id_utilisateur = Session::get('id_utilisateur');
+        //On vérifie que l'utilisateur est bien un enseignant
+        if($utilisateur->status == $constants["STATUS_ENSEIGNANT"])
+        {
+            $projet->type = $type; //Son type
+        }
+        else
+        {
+            $projet->type = $constants["TYPE_PROJET"];
+        }
 
-        $droit = new Droit;
-        $droit->id_utilisateur = $id_utilisateur;
-        $droit->id_projet = $projet->id;
-        $droit->role = $constants["ROLE_ADMIN"];
-        $droit->save();
+        $projet->save(); //Et on enregistre en bdd
 
+        //Création du droit admin sur le projet
+        $droit = new Droit; //Instanciation d'un objet de type droit
+        $droit->id_utilisateur = $id_utilisateur; //Affectation de l'utilisateur
+        $droit->id_projet = $projet->id; //Affectation du projet
+        $droit->role = $constants["ROLE_ADMIN"]; //Puis on dit que c'est l'admin
+        $droit->save(); //On fini par sauvegarder en bdd
+
+        //Redirection vers l'accueil des projets
         return redirect('/');
     }
 }

@@ -11,6 +11,21 @@
     <section class="content container-fluid">
         <a type="button" href="nouveau-projet" class="btn btn-success btn-sm">Nouveau</a>
         <br><br>
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["ACCESS_DENIED"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Vous n'avez pas les droits pour ce projet</p>
+            </div>
+        @endif
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["INVALID_PROJECT"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Ce projet n'existe pas</p>
+            </div>
+        @endif
+
         <div class="row">
           <div class="col-xs-12">
             <div class="box">

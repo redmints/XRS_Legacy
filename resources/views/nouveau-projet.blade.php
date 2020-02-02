@@ -20,7 +20,7 @@
             <div class="box-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">Nom</label>
-                <input class="form-control" name="nom" placeholder="Nom du projet">
+                <input class="form-control" type="text" name="nom" placeholder="Nom du projet" required>
               </div>
               @if ($utilisateur->status == $constants["STATUS_ENSEIGNANT"])
                   <div class="form-group">

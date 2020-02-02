@@ -34,7 +34,6 @@ class Register extends Controller
         $cle = Cle::where('valeur', $cle)->first();
         //On essaie également de récupérer l'email donné
         $email_verification = Utilisateur::where('email', $email)->first();
-        $utilisateur = new Utilisateur;
         //Si l'email n'est pas encore enregistré
         if(!isset($email_verification))
         {

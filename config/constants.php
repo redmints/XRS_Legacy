@@ -12,4 +12,8 @@ return [
     'ROLE_DEV' => '8',
     'TYPE_CLASSROOM' => '9',
     'TYPE_PROJET' => '10',
+    'INVALID_EMAIL' => '11',
+    'ACCESS_DENIED' => '12',
+    'INVALID_PROJECT' => '13',
+    'ALREADY_AUTHORIZED' => '14',
 ];
