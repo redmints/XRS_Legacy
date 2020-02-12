@@ -59,7 +59,7 @@
         });
       </script>
 
-      <iframe width="100%" height="330" frameborder="0" allowfullscreen src="http://localhost:1664/?hostname=localhost&username=Mathias%20Hanna&password=d2lubmVy"></iframe>
+      <iframe width="100%" height="330" frameborder="0" allowfullscreen src="http://xeyrus.com:1664/?hostname=xeyrus.com&port=8999&username=testuser&password=dGVzdA=="></iframe>
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
