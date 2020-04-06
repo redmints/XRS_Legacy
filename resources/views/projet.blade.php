@@ -14,7 +14,7 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-      <a class="btn btn-app" href="ide">
+      <a class="btn btn-app" href="ide?id_projet={{$projet->id}}">
         <i class="fa fa-code"></i> IDE
       </a>
       @if ($projet->type == $constants["TYPE_CLASSROOM"])

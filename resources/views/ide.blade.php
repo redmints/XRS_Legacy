@@ -59,7 +59,9 @@
         });
       </script>
 
-      <iframe width="100%" height="330" frameborder="0" allowfullscreen src="https://xeyrus.com:4433/?hostname=xeyrus.com&port=8999&username=testuser&password=dGVzdA=="></iframe>
+      <iframe width="100%" height="330" frameborder="0" allowfullscreen src="
+      https://xeyrus.com:4433/?hostname=xeyrus.com&port=8999&username={{strtolower($utilisateur->prenom).strtolower($utilisateur->nom)}}&password={{base64_encode($utilisateur->unix_password)}}
+      "></iframe>
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->

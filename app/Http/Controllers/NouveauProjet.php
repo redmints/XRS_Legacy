@@ -62,7 +62,7 @@ class NouveauProjet extends Controller
         $projet = new M_Projet; //On instancie un objet de type Projet
         $projet->nom = $nom; //On lui affecte son nom
         $projet->port = '1'; //Le port par défaut de son docker
-	$projet->id_docker = '1';
+        $projet->id_docker = '1';
 
         //On vérifie que l'utilisateur est bien un enseignant
         if($utilisateur->status == $constants["STATUS_ENSEIGNANT"])
@@ -82,27 +82,27 @@ class NouveauProjet extends Controller
         $droit->id_projet = $projet->id; //Affectation du projet
         $droit->role = $constants["ROLE_ADMIN"]; //Puis on dit que c'est l'admin
         $droit->save(); //On fini par sauvegarder en bdd
-	$variables = array("PACKAGES" => "python3", "USERNAME" => strtolower($utilisateur->prenom).strtolower($utilisateur->nom), "PASSWORD" => "F4212B127A");
-	$this->createMachineFile($projet->id, $variables);
-	$process = new Process(['../docker/build.sh', $projet->id]);
-	$process->run();
-	//Redirection vers l'accueil des projets
+    	$variables = array("PACKAGES" => "python3", "USERNAME" => strtolower($utilisateur->prenom).strtolower($utilisateur->nom), "PASSWORD" => strtolower($utilisateur->unix_password));
+    	$this->createMachineFile($projet->id, $variables);
+    	$process = new Process(['../docker/build.sh', $projet->id]);
+    	$process->run();
+    	//Redirection vers l'accueil des projets
         return redirect('/');
     }
 
     public function createMachineFile($name, $variables)
     {
-	$template = fopen("../docker/template","r");
-	$machine = fopen("../docker/".$name.".machine", "w");
-	while(! feof($template))
-	{
-	    $line = fgets($template);
-	    foreach($variables as $key => $value)
-	    {
-		$line = str_replace("{{".$key."}}",$value, $line);
-	    }
-	    fwrite($machine, $line);
-	}
-	fclose($template);
+    	$template = fopen("../docker/template","r");
+    	$machine = fopen("../docker/".$name.".machine", "w");
+    	while(! feof($template))
+    	{
+    	    $line = fgets($template);
+    	    foreach($variables as $key => $value)
+    	    {
+                $line = str_replace("{{".$key."}}",$value, $line);
+    	    }
+    	    fwrite($machine, $line);
+    	}
+    	fclose($template);
     }
 }
