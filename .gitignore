@@ -13,3 +13,4 @@ yarn-error.log
 addUser.py
 /config/database.php
 composer.lock
+docker/*.machine

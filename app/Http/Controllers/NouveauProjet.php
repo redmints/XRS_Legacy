@@ -92,8 +92,8 @@ class NouveauProjet extends Controller
 
     public function createMachineFile($name, $variables)
     {
-	$template = fopen("/var/www/XRS_Ide/docker/template","r");
-	$machine = fopen("/var/www/XRS_Ide/docker/".$name.".machine", "w");
+	$template = fopen("../docker/template","r");
+	$machine = fopen("../docker/".$name.".machine", "w");
 	while(! feof($template))
 	{
 	    $line = fgets($template);
