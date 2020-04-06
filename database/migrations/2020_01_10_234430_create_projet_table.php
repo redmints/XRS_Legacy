@@ -17,7 +17,8 @@ class CreateProjetTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('nom');
-            $table->integer('id_port');
+            $table->integer('port');
+            $table->string('id_docker');
             $table->enum('type', array('9', '10'));
         });
     }
