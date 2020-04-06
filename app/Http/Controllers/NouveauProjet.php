@@ -79,8 +79,21 @@ class NouveauProjet extends Controller
         $droit->id_projet = $projet->id; //Affectation du projet
         $droit->role = $constants["ROLE_ADMIN"]; //Puis on dit que c'est l'admin
         $droit->save(); //On fini par sauvegarder en bdd
-
+	$this->createMachineFile($projet->id);
+	shell_exec('cd /var/www/XRS_Ide/docker && ./build.sh '.$projet->id);
         //Redirection vers l'accueil des projets
         return redirect('/');
+    }
+
+    public function createMachineFile($name)
+    {
+	$template = fopen("/var/www/XRS_Ide/docker/template.machine","r");
+	$machine = fopen("/var/www/XRS_Ide/docker/".$name.".machine", "w");
+	while(! feof($template))
+	{
+	    $line = fgets($template);
+	    fwrite($machine, $line);
+	}
+	fclose($template);
     }
 }
