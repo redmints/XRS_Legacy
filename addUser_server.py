@@ -19,14 +19,20 @@ mydb = psycopg2.connect(
 
 mycursor = mydb.cursor()
 
-sql = "INSERT INTO utilisateur (nom, prenom, email, password, status) VALUES (%s, %s, %s, %s, %s)"
+sql = "INSERT INTO utilisateur (nom, prenom, email, password, status) VALUES (%s, %s, %s, %s, %s) RETURNING id"
 val = (sys.argv[1], sys.argv[2], "", "", sys.argv[3])
-mycursor.execute(sql, val)
+try:
+	mycursor.execute(sql, val)
+except (Exception, psycopg2.Error) as error :
+	print("Failed to insert record into mobile table", error)
 
 sql = "INSERT INTO cle (valeur, id_utilisateur) VALUES (%s, %s)"
-val = (password, mycursor.lastrowid)
+val = (password, mycursor.fetchone()[0])
 mycursor.execute(sql, val)
 mydb.commit()
+
+mycursor.close()
+mydb.close()
 
 print sys.argv[1]
 print sys.argv[2]

@@ -1,0 +1,74 @@
+[
+    {
+        "name": "bower-asset/jquery",
+        "version": "3.4.1",
+        "version_normalized": "3.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jquery/jquery-dist.git",
+            "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
+            "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
+            "shasum": null
+        },
+        "type": "bower-asset",
+        "installation-source": "dist",
+        "license": [
+            "MIT"
+        ]
+    },
+    {
+        "name": "symfony/process",
+        "version": "v5.0.7",
+        "version_normalized": "5.0.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/process.git",
+            "reference": "c5ca4a0fc16a0c888067d43fbcfe1f8a53d8e70e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/process/zipball/c5ca4a0fc16a0c888067d43fbcfe1f8a53d8e70e",
+            "reference": "c5ca4a0fc16a0c888067d43fbcfe1f8a53d8e70e",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.2.5"
+        },
+        "time": "2020-03-27T16:56:45+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Process\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Process Component",
+        "homepage": "https://symfony.com"
+    }
+]
