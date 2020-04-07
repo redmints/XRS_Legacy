@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Symfony\Component\Process\Process;
 use Illuminate\Http\Request;
 use Config;
 use Session;
@@ -106,6 +107,9 @@ class Settings extends Controller
             {
                 //On efface en bdd
                 Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->delete();
+                $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
+                $process = new Process(['../docker/deluser.sh', $projet->port, strtolower($utilisateur->prenom).strtolower($utilisateur->nom)]);
+                $process->run();
             }
             //Puis on redirige vers la vue settings
             return redirect('settings?id_projet='.$id_projet);
@@ -144,6 +148,8 @@ class Settings extends Controller
 
                     $droit->role = $role; //Affectation du role
                     $droit->save(); //Enregistrement en bdd
+                    $process = new Process(['../docker/adduser.sh', $projet->port, strtolower($utilisateur->prenom).strtolower($utilisateur->nom), strtolower($utilisateur->unix_password)]);
+                    $process->run();
                     //Redirection vers la page settings, en cas de succes
                     return redirect('settings?id_projet='.$_GET["id_projet"]);
                 }
