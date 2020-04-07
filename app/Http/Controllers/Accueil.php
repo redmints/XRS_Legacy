@@ -52,7 +52,7 @@ class Accueil extends Controller
         else
         {
             //Sinon, on redirige vers la page de connexion
-            return view('login');
+            return view('vitrine');
         }
     }
 
