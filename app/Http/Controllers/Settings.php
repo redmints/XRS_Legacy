@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Illuminate\Http\Request;
 use Config;
@@ -102,6 +103,7 @@ class Settings extends Controller
         //Si les champs sont remplis
         if(!empty($id_projet) && !empty($id_utilisateur) && !empty($action))
         {
+	    $projet = M_Projet::where('id', $id_projet)->first();
             //Et si l'action correspond à un effacement
             if($action == "delete")
             {
@@ -123,6 +125,7 @@ class Settings extends Controller
             //Et si le projet est spécifié
             if(!empty($_GET["id_projet"]))
             {
+		$id_projet = $_GET["id_projet"];
                 //On vérifie qu'il ne soit pas déjà autorisé
                 $droit = Droit::where('id_utilisateur', $utilisateur->id)->where('id_projet', $id_projet)->first();
                 if(!isset($droit))
@@ -148,10 +151,16 @@ class Settings extends Controller
 
                     $droit->role = $role; //Affectation du role
                     $droit->save(); //Enregistrement en bdd
-                    $process = new Process(['../docker/adduser.sh', $projet->port, strtolower($utilisateur->prenom).strtolower($utilisateur->nom), strtolower($utilisateur->unix_password)]);
-                    $process->run();
+                    $projet = M_Projet::where('id', $id_projet)->first();
+		    $process = new Process(['../docker/adduser.sh', $projet->port, strtolower($utilisateur->prenom).strtolower($utilisateur->nom), strtolower($utilisateur->unix_password)]);
+                    try {
+    			$process->run();
+			echo $process->getOutput();
+		    } catch (ProcessFailedException $exception) {
+    			echo $exception->getMessage();
+		    }
                     //Redirection vers la page settings, en cas de succes
-                    return redirect('settings?id_projet='.$_GET["id_projet"]);
+                    //return redirect('settings?id_projet='.$_GET["id_projet"]);
                 }
                 else
                 {
