@@ -61,8 +61,7 @@ class NouveauProjet extends Controller
         //Maintenant qu'on a toutes les infos pour la création du projet
         $projet = new M_Projet; //On instancie un objet de type Projet
         $projet->nom = $nom; //On lui affecte son nom
-        $projet->port = '1'; //Le port par défaut de son docker
-        $projet->id_docker = '1';
+        $projet->port = '0'; //Le port par défaut de son docker
 
         //On vérifie que l'utilisateur est bien un enseignant
         if($utilisateur->status == $constants["STATUS_ENSEIGNANT"])

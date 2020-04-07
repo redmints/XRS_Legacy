@@ -1,7 +1,7 @@
 @extends('templateIde')
 
 @section('contenu')
-    <title>Xeyrus | IDE</title>
+    <title>Xeyrus | {{$projet->nom}}</title>
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -60,7 +60,7 @@
       </script>
 
       <iframe width="100%" height="330" frameborder="0" allowfullscreen src="
-      https://xeyrus.com:4433/?hostname=xeyrus.com&port=8999&username={{strtolower($utilisateur->prenom).strtolower($utilisateur->nom)}}&password={{base64_encode($utilisateur->unix_password)}}
+      https://xeyrus.com:4433/?hostname=xeyrus.com&port={{$projet->port}}&username={{strtolower($utilisateur->prenom).strtolower($utilisateur->nom)}}&password={{base64_encode(strtolower($utilisateur->unix_password))}}
       "></iframe>
     <!-- /.content -->
     </div>

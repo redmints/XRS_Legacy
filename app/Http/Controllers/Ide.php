@@ -46,10 +46,29 @@ class Ide extends Controller
                         $droit_createur = Droit::where('id_projet', $projet->id)->where('role', $constants["ROLE_ADMIN"])->first();
                         //Puis on en déduit ses infos
                         $createur = Utilisateur::where('id', $droit_createur->id_utilisateur)->first();
-                        $process = new Process(['../docker/run.sh', $projet->id, 8999]);
-                    	$process->run();
+                        //Si la machine est éteinte
+                        if($projet->port == 0)
+                        {
+                            //Allocation du port à utiliser
+                            $port = 0; //Port par défaut
+                            for($i = 49152; $i < 65535; $i++)
+                            {
+                                $dbPort = M_Projet::where('port', $i)->first();
+                                if(!isset($dbPort))
+                                {
+                                    $port = $i;
+                                    break;
+                                }
+                            }
+                            //Démarrage de l'instance
+                            $process = new Process(['../docker/run.sh', $projet->id, $port]);
+                        	$process->run();
+                            //On met à jour le port en bdd
+                            $projet->port = $port;
+                            $projet->save();
+                        }
                         //Redirection vers la vue ide
-                        return view('ide', compact('utilisateur'));
+                        return view('ide', compact('utilisateur', 'projet'));
                     }
                     else
                     {
