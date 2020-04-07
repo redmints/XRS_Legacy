@@ -125,7 +125,6 @@ class Settings extends Controller
             //Et si le projet est spécifié
             if(!empty($_GET["id_projet"]))
             {
-		$id_projet = $_GET["id_projet"];
                 //On vérifie qu'il ne soit pas déjà autorisé
                 $droit = Droit::where('id_utilisateur', $utilisateur->id)->where('id_projet', $id_projet)->first();
                 if(!isset($droit))
@@ -152,15 +151,10 @@ class Settings extends Controller
                     $droit->role = $role; //Affectation du role
                     $droit->save(); //Enregistrement en bdd
                     $projet = M_Projet::where('id', $id_projet)->first();
-		    $process = new Process(['../docker/adduser.sh', $projet->port, strtolower($utilisateur->prenom).strtolower($utilisateur->nom), strtolower($utilisateur->unix_password)]);
-                    try {
-    			$process->run();
-			echo $process->getOutput();
-		    } catch (ProcessFailedException $exception) {
-    			echo $exception->getMessage();
-		    }
+                    $process = new Process(['../docker/adduser.sh', $projet->port, strtolower($utilisateur->prenom).strtolower($utilisateur->nom), strtolower($utilisateur->unix_password)]);
+                    $process->run();
                     //Redirection vers la page settings, en cas de succes
-                    //return redirect('settings?id_projet='.$_GET["id_projet"]);
+                    return redirect('settings?id_projet='.$_GET["id_projet"]);
                 }
                 else
                 {
