@@ -60,7 +60,7 @@
       </script>
 
       <iframe width="100%" height="330" frameborder="0" allowfullscreen src="
-      https://xeyrus.com:4433/?hostname=xeyrus.com&port={{$projet->port}}&username={{strtolower($utilisateur->prenom).strtolower($utilisateur->nom)}}&password={{base64_encode(strtolower($utilisateur->unix_password))}}
+      https://xeyrus.com:4433/?hostname=xeyrus.com&port={{$projet->port}}&username={{preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array )))}}&password={{base64_encode(strtolower($utilisateur->unix_password))}}
       "></iframe>
     <!-- /.content -->
     </div>
