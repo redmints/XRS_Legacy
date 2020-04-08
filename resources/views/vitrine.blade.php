@@ -28,11 +28,11 @@
 			<div id="wrapper">
 
 				<!-- Intro -->
-					<section id="intro" class="wrapper style1 fullscreen fade-up">
-						<div style="position: absolute; top: 40px; left: 35%;">
+					<section id="intro" class="wrapper style1 fullscreen fade-up" style="justify-content: initial">
+						<div style="position: abosulte;text-align: center;margin-left: auto; margin-right: auto; margin-top:1%;">
 							<img src="dist/img/logo_max_w.png" width="30%">
 							<font color="white"><p>L'apprentissage du code, accessible à tous, partout.</p></font>
-							<ul class="actions">
+							<ul class="actions" style="display: flex;justify-content: center;">
 								<li><a href="#two" class="button scrolly">Découvrir</a></li>
 								<li><a href="login" class="button scrolly">Se connecter</a></li>
 							</ul>
@@ -43,37 +43,37 @@
 					<section id="two" class="wrapper style3 fade-up">
 						<div class="inner">
 							<h2>Présentation</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<p>Xeyrus est une solution en ligne à destination des établissements d'enseignement (Lycées, IUT, Écoles d'Ingénieurs, Universités, ...), qui permet aux étudiants de pouvoir apprendre à coder de n'importe où, à n'importe quel moment et aux enseignants de pouvoir enseigner sans être limités par l'achat de matériel informatique dans leurs établissements ou de paramétrage. Xeyrus leur permet également d'améliorer leurs enseignements grâce à des fonctionnalités supplémentaires et innovantes.</p>
 							<div class="features">
 								<section>
 									<span class="icon solid major fa-code"></span>
-									<h3>Lorem ipsum amet</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Un apprentissage du code plus simple</h3>
+									<p>Solution en ligne qui permet aux étudiants d'apprendre à coder facilement et aux enseignants d'améliorer fortement la préparation et le contenu de leurs cours.</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-lock"></span>
-									<h3>Aliquam sed nullam</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Des données personnelles protégées</h3>
+									<p>Notre solution est conforme au RGPD. La vie privée de vos étudiants et enseignants est protégée.</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-cog"></span>
-									<h3>Sed erat ullam corper</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Plateforme complètement paramétrable</h3>
+									<p>Notre solution peut-être utilisée telle quelle, ou fortement paramétrée, c'est vous qui choisissez !</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-desktop"></span>
-									<h3>Veroeros quis lorem</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Disponible partout, tout le temps</h3>
+									<p>Accédez à votre compte depuis n'importe quel endroit, à partir de n'importe quel appareil, à n'importe quel moment, et codez. Tout simplement.</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-link"></span>
-									<h3>Urna quis bibendum</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Support réactif</h3>
+									<p>Notre équipe est constamment disponible pour répondre à vos besoins.</p>
 								</section>
 								<section>
 									<span class="icon major fa-gem"></span>
-									<h3>Aliquam urna dapibus</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Prix attractifs</h3>
+									<p>Notre volonté est de déterminer le prix le plus juste, et le plus abordable pour tous afin d'améliorer l'efficacité et l'efficience des enseignements.</p>
 								</section>
 							</div>
 						</div>
