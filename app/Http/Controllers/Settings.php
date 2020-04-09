@@ -135,32 +135,40 @@ class Settings extends Controller
                 $droit = Droit::where('id_utilisateur', $utilisateur->id)->where('id_projet', $id_projet)->first();
                 if(!isset($droit))
                 {
-                    //On ajoute les droits pour l'utilisateur donné
-                    $droit = new Droit; //Instanciation d'un objet de type Droit
-                    $droit->id_utilisateur = $utilisateur->id; //Affectation de l'id utilisateur
-                    $droit->id_projet = $_GET["id_projet"]; //Affectation de l'id projet
-
-                    //Option radio passé dans le formulaire
-                    $role = $request->input('optionsRadios');
-
-                    if($role == "option1")
+                    $projet = M_Projet::where('id', $id_projet)->first();
+                    $process = new Process(['../docker/adduser.sh', $projet->port, preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array ))), strtolower($utilisateur->unix_password)]);
+                    $return_code = $process->run();
+                    if($return_code == 0)
                     {
-                        //Premier : role admin
-                        $role = $constants["ROLE_ADMIN"];
+                        //On ajoute les droits pour l'utilisateur donné
+                        $droit = new Droit; //Instanciation d'un objet de type Droit
+                        $droit->id_utilisateur = $utilisateur->id; //Affectation de l'id utilisateur
+                        $droit->id_projet = $_GET["id_projet"]; //Affectation de l'id projet
+
+                        //Option radio passé dans le formulaire
+                        $role = $request->input('optionsRadios');
+
+                        if($role == "option1")
+                        {
+                            //Premier : role admin
+                            $role = $constants["ROLE_ADMIN"];
+                        }
+                        else
+                        {
+                            //Deuxième : role dev
+                            $role = $constants["ROLE_DEV"];
+                        }
+
+                        $droit->role = $role; //Affectation du role
+                        $droit->save(); //Enregistrement en bdd
+                        //Redirection vers la page settings, en cas de succes
+                        return redirect('settings?id_projet='.$_GET["id_projet"]);
                     }
                     else
                     {
-                        //Deuxième : role dev
-                        $role = $constants["ROLE_DEV"];
+                        //Redirection vers l'accueil avec l'erreur, en cas d'échec
+                        return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["DOCKER_ERROR"]);
                     }
-
-                    $droit->role = $role; //Affectation du role
-                    $droit->save(); //Enregistrement en bdd
-                    $projet = M_Projet::where('id', $id_projet)->first();
-                    $process = new Process(['../docker/adduser.sh', $projet->port, preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array ))), strtolower($utilisateur->unix_password)]);
-                    $process->run();
-                    //Redirection vers la page settings, en cas de succes
-                    return redirect('settings?id_projet='.$_GET["id_projet"]);
                 }
                 else
                 {

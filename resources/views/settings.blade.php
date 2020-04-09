@@ -23,6 +23,13 @@
             <p>Cet utilisateur n'existe pas</p>
             </div>
         @endif
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["DOCKER_ERROR"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Un problème est survenu lors de l'ajout de l'utilisateur sur votre conteneur</p>
+            </div>
+        @endif
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">

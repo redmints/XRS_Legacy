@@ -25,6 +25,20 @@
             <p>Ce projet n'existe pas</p>
             </div>
         @endif
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["RUN_ERROR"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Erreur de démarrage du conteneur</p>
+            </div>
+        @endif
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["BUILD_ERROR"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Erreur de compilation du conteneur</p>
+            </div>
+        @endif
         @if (sizeof($data) != 0)
             <div class="row">
               <div class="col-xs-12">
