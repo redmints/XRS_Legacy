@@ -27,7 +27,7 @@
         @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["DOCKER_ERROR"])
             <div class="callout callout-danger">
             <h4>Erreur</h4>
-            <p>Un problème est survenu lors de l'ajout de l'utilisateur sur votre conteneur</p>
+            <p>Un problème est survenu lors de la communication avec votre conteneur</p>
             </div>
         @endif
         <!-- general form elements -->
