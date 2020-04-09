@@ -108,12 +108,12 @@ class Settings extends Controller
             if($action == "delete")
             {
                 //On efface en bdd
+                $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
                 $process = new Process(['../docker/deluser.sh', $projet->port, preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array )))]);
                 $return_code = $process->run();
                 if($return_code == 0)
                 {
                     Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->delete();
-                    $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
                     //Puis on redirige vers la vue settings
                     return redirect('settings?id_projet='.$id_projet);
                 }
