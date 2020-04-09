@@ -16,6 +16,7 @@ class Ide extends Controller
     {
         //Déclaration des constantes
         $constants = Config::get('constants');
+        $unwanted_array = $constants["UNWANTED_ARRAY"];
         //Définition de l'erreur
         $erreur = 0;
         //Récupération de l'id utilisateur
@@ -69,13 +70,16 @@ class Ide extends Controller
                             {
                                 $projet->port = $port;
                                 $projet->save();
+                                //Redirection vers la vue ide
+                                return view('ide', compact('utilisateur', 'projet', 'unwanted_array'));
                             }
                             else
                             {
-                                return redirect('/?erreur='.$constants["RUN_ERROR"]);
+                                $erreur = $constants["RUN_ERROR"];
                             }
-                            //Redirection vers la vue ide
-                            $unwanted_array = $constants["UNWANTED_ARRAY"];
+                        }
+                        else
+                        {
                             return view('ide', compact('utilisateur', 'projet', 'unwanted_array'));
                         }
                     }
