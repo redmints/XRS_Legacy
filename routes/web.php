@@ -33,3 +33,5 @@ Route::get('settings', 'Settings@getForm');
 Route::post('settings', 'Settings@postForm');
 
 Route::get('getUtilisateurs', 'Utils@getUtilisateurs');
+Route::get('keep_alive', 'Utils@setKeepAlive');
+Route::get('shutdown', 'Utils@shutdown');

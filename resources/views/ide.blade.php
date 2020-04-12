@@ -50,6 +50,7 @@
         return find(1, "1");
       }</textarea></form>
 
+      <script src="bower_components/jquery/dist/jquery.min.js"></script>
       <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
           lineNumbers: true,
@@ -57,6 +58,22 @@
           matchBrackets: true,
           theme: "dracula"
         });
+
+        function send(){
+            $.ajax({
+                type: "get",
+                url: "keep_alive?id_projet={{$projet->id}}",
+                success:function(data)
+                {
+                    //Send another request in 10 seconds.
+                    setTimeout(function(){
+                        send();
+                    }, 300000);
+                }
+            });
+        }
+        //Call our function
+        send();
       </script>
 
       <iframe width="100%" height="330" frameborder="0" allowfullscreen src="
