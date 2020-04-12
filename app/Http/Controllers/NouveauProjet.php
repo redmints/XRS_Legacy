@@ -76,7 +76,7 @@ class NouveauProjet extends Controller
         $projet->save(); //Et on enregistre en bdd
 
         $unwanted_array = $constants["UNWANTED_ARRAY"];
-    	$variables = array("PACKAGES" => "python3", "USERNAME" => preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array ))), "PASSWORD" => strtolower($utilisateur->unix_password));
+    	$variables = array("USERNAME" => preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array ))), "PASSWORD" => strtolower($utilisateur->unix_password));
     	$this->createMachineFile($projet->id, $variables);
     	$process = new Process(['../docker/build.sh', $projet->id]);
     	$return_code = $process->run();
