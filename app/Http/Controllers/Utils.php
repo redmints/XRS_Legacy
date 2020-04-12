@@ -56,7 +56,7 @@ class Utils extends Controller
             $jours = ($interval->format('%d'));
             $mois = ($interval->format('%m'));
             $annees = ($interval->format('%y'));
-            if(($minutes <= 10) && ($heures == 0) && ($jours == 0) && ($mois == 0) && ($annees == 0))
+            if(($minutes <= 10) && ($heures == 0) && ($jours == 0) && ($mois == 0) && ($annees == 0) && $projet->port != 0)
             {
                 echo $projet->id." : Présent<br>";
             }
@@ -72,7 +72,8 @@ class Utils extends Controller
                     if($return_code == 0)
                     {
                         $projet->port = 0;
-                        $projet->save();
+                        $projet->timestamps = false;
+			$projet->save();
                         echo " instance arrêtée avec succès<br>";
                     }
                     else

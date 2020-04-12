@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker rm $(docker stop $(docker ps -a -q --filter ancestor=$1 --format="{{.ID}}"))
+docker commit projet_$1 save_$1
+docker rm $(docker stop $(docker ps -a -q --filter "name=projet_$1" --format="{{.ID}}"))
