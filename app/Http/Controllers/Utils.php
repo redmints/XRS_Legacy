@@ -62,17 +62,27 @@ class Utils extends Controller
             }
             else
             {
-                echo $projet->id." : Absent, extinction...";
-                //Arrêt de l'instance
-                $process = new Process(['../docker/stop.sh', $projet->id]);
-                $return_code = $process->run();
-                if($return_code == 0)
+                echo $projet->id." : Absent...";
+                if($projet->port != 0)
                 {
-                    echo " instance arrêtée avec succès<br>";
+                    echo " arrêt de l'instance...";
+                    //Arrêt de l'instance
+                    $process = new Process(['../docker/stop.sh', $projet->id]);
+                    $return_code = $process->run();
+                    if($return_code == 0)
+                    {
+                        $projet->port = 0;
+                        $projet->save();
+                        echo " instance arrêtée avec succès<br>";
+                    }
+                    else
+                    {
+                        echo "Erreur lors de l'arrêt de l'instance<br>";
+                    }
                 }
                 else
                 {
-                    echo "Erreur lors de l'arrêt de l'instance<br>";
+                    echo " instance déjà arrêtée<br>";
                 }
             }
         }
