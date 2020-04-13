@@ -88,4 +88,35 @@ class Utils extends Controller
             }
         }
     }
+
+    public function dir2json(Request $request)
+    {
+        $dir = $request->input("dir");
+        $port = $request->input("port");
+        $connection = \ssh2_connect('xeyrus.com', $port);
+        ssh2_auth_password($connection, 'root', 'f4212b127a');
+
+        $sftp = ssh2_sftp($connection);
+        $sftp_fd = intval($sftp);
+
+        echo convert("ssh2.sftp://".$sftp_fd.$dir);
+    }
+
+    public function convert($dir)
+    {
+        $a = [];
+        if($handler = opendir($dir))
+        {
+            while (($content = readdir($handler)) !== FALSE)
+            {
+                if ($content != "." && $content != ".." && $content != "Thumb.db")
+                {
+                    if(is_file($dir."/".$content)) $a[] = $content;
+    				else if(is_dir($dir."/".$content)) $a[$content] = convert($dir."/".$content);
+                }
+            }
+            closedir($handler);
+        }
+        return json_encode($a);
+    }
 }
