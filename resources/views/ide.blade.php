@@ -1,27 +1,70 @@
 @extends('templateIde')
 
 @section('contenu')
+    <style>
+    /* Remove default bullets */
+    ul, #myUL {
+     list-style-type: none;
+     color: white;
+    }
+
+    /* Remove margins and padding from the parent ul */
+    #myUL {
+     margin: 0;
+     padding: 0;
+    }
+
+    /* Style the caret2/arrow */
+    .caret2 {
+     cursor: pointer;
+     user-select: none; /* Prevent text selection */
+    }
+
+    /* Create the caret2/arrow with a unicode, and style it */
+    .caret2::before {
+     content: "\25B6";
+     color: white;
+     display: inline-block;
+     margin-right: 6px;
+    }
+
+    /* Rotate the caret2/arrow icon when clicked on (using JavaScript) */
+    .caret2-down::before {
+     transform: rotate(90deg);
+    }
+
+    /* Hide the nested list */
+    .nested {
+     display: none;
+    }
+
+    /* Show the nested list when the user clicks on the caret2/arrow (with JavaScript) */
+    .active {
+     display: block;
+    }
+    </style>
     <title>Xeyrus | {{$projet->nom}}</title>
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-code"></i> <span>PHP Terminale S3 (F. Hoguin)</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="index.html"> index.php</a></li>
-            <li><a href="index2.html"> demo.php</a></li>
-            <li><a href="index2.html"> test.php</a></li>
-          </ul>
-        </li>
-      </ul>
+        <ul id="myUL">
+            <li>
+                <span class="caret2">{{$projet->nom}}</span>
+                <ul class="nested">
+                    <li>Water</li>
+                    <li>Coffee</li>
+                    <li>
+                        <span class="caret2">Tea</span>
+                        <ul class="nested">
+                            <li>Black Tea</li>
+                            <li>White Tea</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </section>
     <!-- /.sidebar -->
     </aside>
@@ -52,6 +95,7 @@
 
       <script src="bower_components/jquery/dist/jquery.min.js"></script>
       <script>
+        //Paramètres de l'éditeur de texte
         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
           lineNumbers: true,
           styleActiveLine: true,
@@ -59,13 +103,24 @@
           theme: "dracula"
         });
 
+        //Pour le browser de fichiers
+        var toggler = document.getElementsByClassName("caret2");
+        var i;
+        for (i = 0; i < toggler.length; i++) {
+          toggler[i].addEventListener("click", function() {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret2-down");
+          });
+        }
+
+        //Envoi du keep_alive toutes les 5 minutes
         function send(){
             $.ajax({
                 type: "get",
                 url: "keep_alive?id_projet={{$projet->id}}",
                 success:function(data)
                 {
-                    //Send another request in 10 seconds.
+                    //Send another request in 5 minutes.
                     setTimeout(function(){
                         send();
                     }, 300000);
