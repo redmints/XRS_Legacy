@@ -62,7 +62,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Compte</a>
+                  <a href="modificationCompte" class="btn btn-default btn-flat">Compte</a>
                 </div>
                 <div class="pull-right">
                   <a href="login" class="btn btn-default btn-flat">Déconnexion</a>
