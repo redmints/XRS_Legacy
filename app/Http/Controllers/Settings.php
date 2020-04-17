@@ -101,17 +101,18 @@ class Settings extends Controller
         $action = $request->input('action'); //l'action à effectuer
 
         //Si les champs sont remplis
-        if(!empty($id_projet) && !empty($id_utilisateur) && !empty($action))
+        if(!empty($id_projet) && !empty($action) && !empty($id_utilisateur))
         {
 	    $projet = M_Projet::where('id', $id_projet)->first();
+
             //Et si l'action correspond à un effacement
-            if($action == "delete")
+            if($action == "delete"  )
             {
                 //On efface en bdd
                 $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
                 $process = new Process(['../docker/deluser.sh', $projet->port, preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array )))]);
                 $return_code = $process->run();
-		if($return_code == 0)
+		              if($return_code == 0)
                 {
                     Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->delete();
                     //Puis on redirige vers la vue settings
@@ -123,6 +124,18 @@ class Settings extends Controller
                     return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["DOCKER_ERROR"]);
                 }
             }
+            //si l'action correspond à un effacement de projet
+            if($action == "delete-projet"){
+
+
+                  //efface en bd
+
+                  Droit::where('id_projet', $id_projet)->delete();
+                  M_Projet::where('id', $id_projet)->delete();
+
+                  //Puis on redirige vers la vue acceuil
+                  //return view('accueil', compact('utilisateur', 'data', 'constants'));
+                  return redirect('/');
         }
 
         //Récupération des infos de l'utilisateur donné
@@ -190,4 +203,5 @@ class Settings extends Controller
             return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["UNKNOWN_USER"]);
         }
     }
+}
 }

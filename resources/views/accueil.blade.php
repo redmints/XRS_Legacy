@@ -53,6 +53,7 @@
                         <th>Nom</th>
                         <th>Rôle</th>
                         <th>Créateur</th>
+                        <th>Action</th>
                       </tr>
                       @foreach ($data as $projet)
                           <tr onclick="document.location = 'projet?id_projet={{$projet["id"]}}';">
@@ -66,6 +67,19 @@
                                 @endif
                             </td>
                             <td>{{$projet["createur"]}}</td>
+                          <td> <form role="form" action="settings?id_projet={{$projet["id"]}}" method="post">
+                                <input type="hidden" name="id_projet" value="{{$projet["id"]}}">
+                                <input type="hidden" name="id_utilisateur" value="{{$utilisateur["id"]}}">
+                                <input type="hidden" name="action" value="delete-projet">
+                                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            </form>
+
+
+                          </td>
+                            <!--<button type="submit" name="supp" class="btn btn-danger btn-sm"/>Supprimer</td>-->
+
+
                           </tr>
                       @endforeach
                     </table>
