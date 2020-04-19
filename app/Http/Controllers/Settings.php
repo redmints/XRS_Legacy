@@ -126,15 +126,18 @@ class Settings extends Controller
             }
             //si l'action correspond à un effacement de projet
             if($action == "delete-projet"){
+		  $process = new Process(['../docker/rm.sh', $projet->id]);
+                  $return_code = $process->run();
+		  if($return_code == 0)
+		  {
 
+                  	//efface en bd
 
-                  //efface en bd
-
-                  Droit::where('id_projet', $id_projet)->delete();
-                  M_Projet::where('id', $id_projet)->delete();
-
-                  //Puis on redirige vers la vue acceuil
-                  //return view('accueil', compact('utilisateur', 'data', 'constants'));
+                  	Droit::where('id_projet', $id_projet)->delete();
+                  	M_Projet::where('id', $id_projet)->delete();
+                  	//Puis on redirige vers la vue acceuil
+                  	//return view('accueil', compact('utilisateur', 'data', 'constants'));
+		  }
                   return redirect('/');
         }
 
