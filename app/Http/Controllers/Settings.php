@@ -103,7 +103,7 @@ class Settings extends Controller
         //Si les champs sont remplis
         if(!empty($id_projet) && !empty($action) && !empty($id_utilisateur))
         {
-	    $projet = M_Projet::where('id', $id_projet)->first();
+	        $projet = M_Projet::where('id', $id_projet)->first();
 
             //Et si l'action correspond à un effacement
             if($action == "delete")
@@ -138,6 +138,7 @@ class Settings extends Controller
                 //Puis on redirige vers la vue acceuil
                 return redirect('/');
             }
+        }
 
         //Récupération des infos de l'utilisateur donné
         $utilisateur = Utilisateur::where('id', $request->input('email_utilisateur'))->first();
@@ -204,5 +205,4 @@ class Settings extends Controller
             return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["UNKNOWN_USER"]);
         }
     }
-}
 }
