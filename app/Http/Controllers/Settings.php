@@ -106,13 +106,13 @@ class Settings extends Controller
 	    $projet = M_Projet::where('id', $id_projet)->first();
 
             //Et si l'action correspond à un effacement
-            if($action == "delete"  )
+            if($action == "delete")
             {
                 //On efface en bdd
                 $utilisateur = Utilisateur::where('id', $id_utilisateur)->first();
                 $process = new Process(['../docker/deluser.sh', $projet->port, preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array )))]);
                 $return_code = $process->run();
-		              if($return_code == 0)
+                if($return_code == 0)
                 {
                     Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->delete();
                     //Puis on redirige vers la vue settings
@@ -125,18 +125,19 @@ class Settings extends Controller
                 }
             }
             //si l'action correspond à un effacement de projet
-            if($action == "delete-projet"){
-
-
-                  //efface en bd
-
-                  Droit::where('id_projet', $id_projet)->delete();
-                  M_Projet::where('id', $id_projet)->delete();
-
-                  //Puis on redirige vers la vue acceuil
-                  //return view('accueil', compact('utilisateur', 'data', 'constants'));
-                  return redirect('/');
-        }
+            if($action == "delete-projet")
+            {
+                $process = new Process(['../docker/rm.sh', $projet->id]);
+                $return_code = $process->run();
+                if($return_code == 0)
+                {
+                    //efface en bd
+                    Droit::where('id_projet', $id_projet)->delete();
+                    M_Projet::where('id', $id_projet)->delete();
+                }
+                //Puis on redirige vers la vue acceuil
+                return redirect('/');
+            }
 
         //Récupération des infos de l'utilisateur donné
         $utilisateur = Utilisateur::where('id', $request->input('email_utilisateur'))->first();
