@@ -21,6 +21,7 @@ class CreateUtilisateurTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('unix_password');
+            $table->string('avatar');
             $table->enum('status', array('4', '5', '6'));
         });
     }
