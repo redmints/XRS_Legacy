@@ -28,7 +28,7 @@
           <p class="login-box-msg">Modification des informations de votre compte</p>
           <form action="modificationCompte" method="post" enctype="multipart/form-data" >
             <div class="form-group has-feedback" style="text-align: center">
-              <img src="dist/img/{{$utilisateur['avatar']}}" class="user-image" alt="User Image">
+              <img src="dist/img/{{$utilisateur['avatar']}}" width="300" heigth="300" class="user-image" alt="User Image">
               <input type="file" name="imgavatar">
             </div>
             <div class="form-group has-feedback">
