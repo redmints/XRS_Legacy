@@ -13,16 +13,16 @@ def generate():
 
 mydb = mysql.connector.connect(
   host="localhost",
-  port="8889",
-  user="root",
-  passwd="root",
-  database="XRS_bdd"
+  port="3306",
+  user="dev",
+  passwd="xrs_password",
+  database="Xeyrus"
 )
 
 mycursor = mydb.cursor()
 
-sql = "INSERT INTO utilisateur (nom, prenom, email, password, unix_password, status) VALUES (%s, %s, %s, %s, %s, %s)"
-val = (sys.argv[1], sys.argv[2], "", "", generate(), sys.argv[3])
+sql = "INSERT INTO utilisateur (nom, prenom, email, password, unix_password, status, avatar) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+val = (sys.argv[1], sys.argv[2], "", "", generate(), sys.argv[3], "user2-160x160.jpg")
 mycursor.execute(sql, val)
 
 password = generate()

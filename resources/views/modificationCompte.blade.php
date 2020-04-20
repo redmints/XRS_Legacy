@@ -13,10 +13,23 @@
               <p>Les deux mots de passes entrés ne correspondent pas</p>
               </div>
           @endif
+          @if (isset($erreur) && $erreur == $constants["SIZE_ERROR"])
+              <div class="callout callout-danger">
+              <h4>Erreur</h4>
+              <p>Le fichier est trop volumineux/p>
+              </div>
+          @endif
+          @if (isset($erreur) && $erreur == $constants["EXTENSION_ERROR"])
+              <div class="callout callout-danger">
+              <h4>Erreur</h4>
+              <p>Cette extension n'est pas autorisé nous acceptions les extensions suivantes : jpg, jpeg, gif, png</p>
+              </div>
+          @endif
           <p class="login-box-msg">Modification des informations de votre compte</p>
-          <form action="modificationCompte" method="post">
+          <form action="modificationCompte" method="post" enctype="multipart/form-data" >
             <div class="form-group has-feedback" style="text-align: center">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="dist/img/{{$utilisateur['avatar']}}" width="300" heigth="300" class="user-image" alt="User Image">
+              <input type="file" name="imgavatar">
             </div>
             <div class="form-group has-feedback">
               <input type="text" list="prenom" class="form-control" value="{{ $utilisateur['prenom'] }}" name="prénom" placeholder="Prénom" autofocus>

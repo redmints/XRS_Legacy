@@ -54,6 +54,7 @@ class Compte extends Controller
         $email = $request->input('email');//Email donné dans le formulaire
         $password = $request->input('password');//Nouveau Mot de passe donné dans le formulaire
         $password_confirmation = $request->input('confPassword');//Confirmation du mot de passe donné dans le formulaire
+        $img =$request->imgavatar; // Image donner dans le formulaire
 
         //Définition de l'erreur en tant que VALID par défaut
         $erreur = $constants["VALID"];
@@ -103,7 +104,7 @@ class Compte extends Controller
             //Si le mot de passe donné et sa confirmation concordent
             if($password == $password_confirmation)
             {
-                //Hash puis affectation du mot de passe donné
+                //Hash puis affectation du mot de passe donné$avatar
                 $utilisateur->password = hash('tiger192,3', $password);
             }
             else
@@ -111,6 +112,52 @@ class Compte extends Controller
                 //Sinon, la variable erreur prend la valeur NOT_SAME_PASSWORD
                 $erreur = $constants["NOT_SAME_PASSWORD"];
             }
+        }
+
+        if(isset($img)){
+          // on récupère le nom de l'image
+          $avatar=$request->imgavatar->getClientOriginalName();
+
+          // Si l'image de l'avatar est differente de celle connu actuellement
+          if($avatar != $utilisateur->avatar){
+
+            // On recupère la taille du fichier
+            $size = $request->imgavatar->getSize();
+
+            // Si il n'est pas trop volumineu
+            if($size <= 1000000){
+
+              // on récupère l'extension du fichier
+              $extension = $request->imgavatar->getClientOriginalExtension();
+
+              //liste des extensions autorisé
+              $extensions_autorisees=array('jpg','jpeg','gif','png');
+
+              // Si l'extention correspond a celle autorisées
+              if(in_array($extension,$extensions_autorisees)){
+
+                // on récupère le chemin de l'image
+                $path= $request->imgavatar->getRealPath();
+                // On déplace l'image qui était enregistré dans un dossier temporaire vers le dossier img
+                //move_uploaded_file($path, 'dist/img'.$avatar);
+                $file=$request->file('imgavatar');
+
+                $file->move('dist/img',$avatar);
+                // On attribut le nom de l'img dans la bd
+                $utilisateur->avatar = $avatar;
+                // on enregistre
+                $utilisateur->save();
+              }
+
+              else {
+                $erreur = $constants["EXTENSION_ERROR"];
+              }
+           }
+           else{
+
+             $erreur = $constants["SIZE_ERROR"];
+           }
+          }
         }
 
         //S'il n'y a pas d'erreur

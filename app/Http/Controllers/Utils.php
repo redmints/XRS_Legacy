@@ -17,9 +17,9 @@ class Utils extends Controller
         $utilisateurs = [];
         if ($pattern != "")
         {
-            $utilisateurs = Utilisateur::where("nom", "ILIKE", "%{$pattern}%")
-                                        ->orWhere("prenom", "ILIKE", "%{$pattern}%")
-                                        ->orWhere("email", "ILIKE", "%{$pattern}%")
+            $utilisateurs = Utilisateur::where("nom", "LIKE", "%{$pattern}%")
+                                        ->orWhere("prenom", "LIKE", "%{$pattern}%")
+                                        ->orWhere("email", "LIKE", "%{$pattern}%")
                                         ->take(100)
                                         ->get();
         }
