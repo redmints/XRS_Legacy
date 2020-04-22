@@ -6,6 +6,7 @@ use Symfony\Component\Process\Process;
 use Illuminate\Http\Request;
 use App\Utilisateur;
 use App\M_Projet;
+use App\Package;
 use DateTime;
 
 class Utils extends Controller
@@ -34,6 +35,30 @@ class Utils extends Controller
         }
 
         return response()->json($utilisateursRenvoyees);
+    }
+
+    public function getPackages(Request $request)
+    {
+        $pattern = $request->input("term");
+
+        $packages = [];
+        if ($pattern != "")
+        {
+            $packages = Package::where("nom", "LIKE", "%{$pattern}%")
+                                        ->take(100)
+                                        ->get();
+        }
+
+        $packagesRenvoyees = [];
+        foreach ($packages as $package)
+        {
+            $packagesRenvoyees[] = [
+                "id" => $package->id,
+                "text" => $package->nom
+            ];
+        }
+
+        return response()->json($packagesRenvoyees);
     }
 
     public function setKeepAlive(Request $request)
