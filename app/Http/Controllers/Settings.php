@@ -115,10 +115,28 @@ class Settings extends Controller
         //Déclaration des constantes
         $constants = Config::get('constants');
         $unwanted_array = $constants["UNWANTED_ARRAY"];
-        //Récupération des valeurs du formulaire
+        //Récupération des valeurs des formulaires
         $id_projet = $request->input('id_projet'); //l'id projet
         $id_utilisateur = $request->input('id_utilisateur'); //l'id utilisateur
         $action = $request->input('action'); //l'action à effectuer
+        $new_project_name = $request->input('projectName');//le nouveau nom du projet
+
+        //Si validation du nouveau nom du projet
+        if(isset($new_project_name))
+        {
+            $id_projet = $_GET["id_projet"]; //L'id du projet spécifié en URL
+            //Récupération des infos du projet
+            $projet = M_Projet::where('id', $id_projet)->first();
+            //Affectation du nouveau nom de projet
+            $projet->nom = $new_project_name;
+            //Enregistrement en base de données
+            $projet->save();
+
+            //On redirige vers la vue settings
+            return redirect('settings?id_projet='.$id_projet."&erreur=".$constants["VALID"]);
+
+
+        }
 
         //Si les champs sont remplis
         if(!empty($id_projet) && !empty($action) && !empty($id_utilisateur))

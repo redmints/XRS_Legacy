@@ -37,7 +37,39 @@
             <p>Les champs sont vides ou n'existe pas, impossible d'ajouter</p>
             </div>
         @endif
-        <!-- general form elements -->
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["VALID"])
+          <div class="callout callout-success">
+          <h4>Le nom du projet a bien été modifié</h4>
+          <p>Vous pouvez continuer à naviguer</p>
+          </div>
+        @endif
+
+        <!-- general form elements: rename project -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Renommer le projet</h3>
+          </div>
+          <!-- /.box-header -->
+          <!-- form start -->
+          <form role="form" action="settings?id_projet={{$projet->id}}" method="post">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="oldProject">Nom actuel du projet</label>
+                    <input type="text" class="form-control" id="oldProject" name="oldProjectName" value="{{$projet->nom}}" disabled="disabled"><br>
+                    <label for="renameProject">Nouveau nom du projet</label>
+                    <input type="text" class="form-control" id="renameProject" name="projectName" required>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-primary">Valider</button>
+            </div>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          </form>
+        </div>
+
+        <!-- general form elements: add users -->
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">Ajout d'un nouvel utilisateur</h3>
