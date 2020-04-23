@@ -201,10 +201,20 @@
                 <table class="table table-hover">
                   <tr>
                     <th>Nom</th>
+                    <th>Action</th>
                   </tr>
                   @foreach ($infopackage as $pack)
                       <tr>
                         <td>{{$pack["nom_package"]}}</td>
+                        <td><form role="form" action="settings?id_projet={{$projet->id}}" method="post">
+                              <input type="hidden" name="id_projet" value="{{$projet->id}}">
+                              <input type="hidden" name="id_utilisateur" value="{{$participant["id"]}}">
+                              <input type="hidden" name="nom_package" value="{{$pack["nom_package"]}}">
+                              <input type="hidden" name="action" value="delete-package">
+                              <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            </form>
+                      </td>
                       </tr>
                    @endforeach
                 </table>

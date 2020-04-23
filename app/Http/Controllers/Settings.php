@@ -189,6 +189,13 @@ class Settings extends Controller
                 //Puis on redirige vers la vue acceuil
                 return redirect('/');
             }
+            if($action == "delete-package")
+            {
+              $pack = Package::where('nom', $request->input('nom_package'))->first();
+              CorrespPackage::where('id_package', $pack->id)->where('id_projet', $_GET["id_projet"])->delete();
+
+              return redirect('settings?id_projet='.$_GET["id_projet"]);
+            }
         }
 
         //Récupération des info du package donné
