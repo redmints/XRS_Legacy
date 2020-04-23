@@ -120,6 +120,19 @@ class Settings extends Controller
         $id_utilisateur = $request->input('id_utilisateur'); //l'id utilisateur
         $action = $request->input('action'); //l'action à effectuer
         $new_project_name = $request->input('projectName');//le nouveau nom du projet
+        $new_role= $request->input('role_utilisateur'); // on récupère le nouveau role dans l'url
+
+        if(isset($new_role)){
+
+            // récupération des info sur les droits dans la bd
+            $info_util= Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->first();
+            //Affectation du nouveau role
+            $info_util->role= $new_role;
+            //Enregistrement en bdd
+            $info_util->save();
+
+            return redirect('settings?id_projet='.$id_projet);
+        }
 
         //Si validation du nouveau nom du projet
         if(isset($new_project_name))

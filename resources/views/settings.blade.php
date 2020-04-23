@@ -127,12 +127,21 @@
                         <td>{{$participant["prenom"]}} {{$participant["nom"]}}</td>
                         <td>{{$participant["email"]}}</td>
                         <td>
-                            @if ($participant['role'] == $constants["ROLE_ADMIN"])
-                                Administrateur
-                            @endif
-                            @if ($participant['role'] == $constants["ROLE_DEV"])
-                                Développeur
-                            @endif
+                           <form role="form" action="settings?id_projet={{$projet->id}}" method="post">
+                             <input type="hidden" name="id_projet" value="{{$projet->id}}">
+                             <input type="hidden" name="id_utilisateur" value="{{$participant["id"]}}">
+                              <select onchange="this.form.submit()" name="role_utilisateur">
+                                @if ($participant['role'] == $constants["ROLE_ADMIN"])
+                                  <option value="7">Administrateur</option>
+                                  <option value="8">Développeur</option>
+                                @endif
+                                @if ($participant['role'] == $constants["ROLE_DEV"])
+                                    <option value="8">Développeur</option>
+                                    <option value="7">Administrateur</option>
+                                @endif
+                              </select>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          </form>
                         </td>
                         <td>
                             @if ($participant['id'] != $utilisateur->id)
@@ -147,6 +156,7 @@
                                 <button type="button" class="btn btn-sm btn-disabled">Supprimer</button>
                             @endif
                         </td>
+
                       </tr>
                   @endforeach
                 </table>
