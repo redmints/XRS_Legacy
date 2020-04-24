@@ -50,15 +50,15 @@
                   <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                       <tr>
-                        <th>Nom</th>
-                        <th>Rôle</th>
-                        <th>Créateur</th>
-                        <th>Action</th>
+                        <th  style="text-align: center; vertical-align: middle;">Nom</th>
+                        <th  style="text-align: center; vertical-align: middle;">Rôle</th>
+                        <th  style="text-align: center; vertical-align: middle;">Créateur</th>
+                        <th  style="text-align: center; vertical-align: middle;">Actions</th>
                       </tr>
                       @foreach ($data as $projet)
-                          <tr onclick="document.location = 'projet?id_projet={{$projet["id"]}}';">
-                            <td>{{$projet["nom"]}}</td>
-                            <td>
+                          <tr>
+                            <td style="text-align: center; vertical-align: middle;">{{$projet["nom"]}}</td>
+                            <td style="text-align: center; vertical-align: middle;">
                                 @if ($projet['role'] == $constants["ROLE_ADMIN"])
                                     Propriétaire
                                 @endif
@@ -66,17 +66,33 @@
                                     Développeur
                                 @endif
                             </td>
-                            <td>{{$projet["createur"]}}</td>
-                            <td>
-                                <form role="form" action="settings?id_projet={{$projet["id"]}}" method="post">
-                                    <input type="hidden" name="id_projet" value="{{$projet["id"]}}">
-                                    <input type="hidden" name="id_utilisateur" value="{{$utilisateur["id"]}}">
-                                    <input type="hidden" name="action" value="delete-projet">
-                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                </form>
+                            <td style="text-align: center; vertical-align: middle;">{{$projet["createur"]}}</td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <a type="button" href="projet?id_projet={{$projet['id']}}" class="btn btn-success btn-sm">Entrer</a>
+                                <button data-toggle="modal" data-target="#formulaire" class="btn btn-sm btn-danger">Supprimer</button>
+                                <div class="modal" id="formulaire">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Attention</h4>
+                                            </div>
+                                            <div class="modal-body" >
+                                                <p> Êtes-vous sûr de vouloir supprimer ce projet:<b style="color:red;"> {{$projet['nom']}}</b></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form class="col" role="form" action="settings?id_projet={{$projet["id"]}}" method="post" >
+                                                    <input type="hidden" name="id_projet" value="{{$projet["id"]}}">
+                                                    <input type="hidden" name="id_utilisateur" value="{{$utilisateur["id"]}}">
+                                                    <input type="hidden" name="action" value="delete-projet">
+                                                    <button type="submit" class="btn btn-sm btn-danger" >Oui</button>
+                                                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" >Non</button>
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
-
                           </tr>
                       @endforeach
                     </table>
@@ -103,4 +119,16 @@
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    <script>
+        function valide(){
+            var conf = confirm("Êtes-vous sûr de vouloir supprimer ce projet: ");
+            if(conf == false){
+              return false;
+            }
+
+        }
+
+    </script>
+
 @endsection
