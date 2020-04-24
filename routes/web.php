@@ -36,6 +36,7 @@ Route::get('settings', 'Settings@getForm');
 Route::post('settings', 'Settings@postForm');
 
 Route::get('getUtilisateurs', 'Utils@getUtilisateurs');
+Route::get('getPackages', 'Utils@getPackages');
 Route::get('keep_alive', 'Utils@setKeepAlive');
 Route::get('shutdown', 'Utils@shutdown');
 Route::get('dir2json', 'Utils@dir2json');

@@ -10,6 +10,8 @@ use Session;
 use App\Utilisateur;
 use App\Droit;
 use App\M_Projet;
+use App\CorrespPackage;
+use App\Package;
 
 class Settings extends Controller
 {
@@ -60,8 +62,26 @@ class Settings extends Controller
                             //Ajout du tableau temporaire au tableau de retour
                             $data[$i] = $iteration;
                         }
+
+                        //on récupure dans la bdd la liste des packages correspondant a ce projet
+                        $packagenbr= CorrespPackage::where('id_projet',$projet->id)->get();
+                        // déclaration du tableau de retour
+                        $infopackage= [];
+                        // pour chacun ligne en bdd
+                        for($i =0; $i<sizeof($packagenbr);$i++){
+
+                          $packageite=$packagenbr[$i]; // package de l'$iteration
+                          // on Récupère les information du package en bdd
+                          $packagecourant = Package::where('id',$packageite['id_package'])->first();
+
+                          $iteration=array();
+
+                          $iteration["nom_package"]= $packagecourant->nom; // on ajoute le nom du package dans du tableau de l'iteration
+
+                          $infopackage[$i]=$iteration; // ajout dans le tableau de retour
+                        }
                         //On redirige vers la vue
-                        return view('settings', compact('utilisateur', 'projet', 'data', 'constants'));
+                        return view('settings', compact('utilisateur', 'projet', 'data', 'constants','infopackage'));
                     }
                     else
                     {
@@ -100,6 +120,19 @@ class Settings extends Controller
         $id_utilisateur = $request->input('id_utilisateur'); //l'id utilisateur
         $action = $request->input('action'); //l'action à effectuer
         $new_project_name = $request->input('projectName');//le nouveau nom du projet
+        $new_role= $request->input('role_utilisateur'); // on récupère le nouveau role dans l'url
+
+        if(isset($new_role)){
+
+            // récupération des info sur les droits dans la bd
+            $info_util= Droit::where('id_utilisateur', $id_utilisateur)->where('id_projet', $id_projet)->first();
+            //Affectation du nouveau role
+            $info_util->role= $new_role;
+            //Enregistrement en bdd
+            $info_util->save();
+
+            return redirect('settings?id_projet='.$id_projet);
+        }
 
         //Si validation du nouveau nom du projet
         if(isset($new_project_name))
@@ -156,13 +189,21 @@ class Settings extends Controller
                 //Puis on redirige vers la vue acceuil
                 return redirect('/');
             }
+            if($action == "delete-package")
+            {
+              $pack = Package::where('nom', $request->input('nom_package'))->first();
+              CorrespPackage::where('id_package', $pack->id)->where('id_projet', $_GET["id_projet"])->delete();
+
+              return redirect('settings?id_projet='.$_GET["id_projet"]);
+            }
         }
 
-
-
+        //Récupération des info du package donné
+        $pack = Package::where('id', $request->input('name_package'))->first();
         //Récupération des infos de l'utilisateur donné
         $utilisateur = Utilisateur::where('id', $request->input('email_utilisateur'))->first();
-        //Si l'utilisateur demandé existe
+
+        //Si l'utilisateur demandé existe dans le cas d'un ajout d'utilisateur
         if(isset($utilisateur))
         {
             //Et si le projet est spécifié
@@ -219,10 +260,47 @@ class Settings extends Controller
                 return redirect('/?erreur='.$constants["INVALID_PROJECT"]);
             }
         }
-        else
+        /////////
+        //Si le nom du package existe dans le cas d'un ajout de package
+        else if(isset($pack))
         {
+            //Et si le projet est spécifié
+            if(!empty($_GET["id_projet"]))
+            {
+
+                  //On vérifie que le package n'est pas déjà ajouté
+                  $verif = CorrespPackage::where('id_package', $pack->id)->where('id_projet', $_GET["id_projet"])->first();
+
+                  if(!isset($verif))
+                  {
+
+                    $corresp = new CorrespPackage; //Instanciation d'un objet de type CorrespPackage
+                    $corresp->id_package = $pack->id; //Affectation de l'id du package
+                    $corresp->id_projet = $_GET["id_projet"]; //Affectation de l'id projet
+                    $corresp->save();
+
+                    return redirect('settings?id_projet='.$_GET["id_projet"]);
+                }
+                else
+                {
+                    //Redirection vers l'accueil avec l'erreur, en cas d'échec
+                    return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["ALREADY_ADD"]);
+                }
+
+            }
+            else
+            {
+                //Redirection vers l'accueil avec l'erreur, en cas d'échec
+                return redirect('/?erreur='.$constants["INVALID_PROJECT"]);
+            }
+          }
+
+       else
+       {
             //Redirection vers l'accueil avec l'erreur, en cas d'échec
-            return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["UNKNOWN_USER"]);
+            return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["CHAMP_VIDE"]);
         }
-    }
+
+
+}
 }

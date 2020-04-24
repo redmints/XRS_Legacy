@@ -17,17 +17,24 @@
             </div>
         @endif
 
-        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["UNKNOWN_USER"])
-            <div class="callout callout-danger">
-            <h4>Erreur</h4>
-            <p>Cet utilisateur n'existe pas</p>
-            </div>
-        @endif
-
         @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["DOCKER_ERROR"])
             <div class="callout callout-danger">
             <h4>Erreur</h4>
             <p>Un problème est survenu lors de la communication avec votre conteneur</p>
+            </div>
+        @endif
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["ALREADY_ADD"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Ce package est déjà présent sur le projet</p>
+            </div>
+        @endif
+
+        @if (isset($_GET["erreur"]) && $_GET["erreur"] == $constants["CHAMP_VIDE"])
+            <div class="callout callout-danger">
+            <h4>Erreur</h4>
+            <p>Les champs sont vides ou n'existe pas, impossible d'ajouter</p>
             </div>
         @endif
 
@@ -120,12 +127,21 @@
                         <td>{{$participant["prenom"]}} {{$participant["nom"]}}</td>
                         <td>{{$participant["email"]}}</td>
                         <td>
-                            @if ($participant['role'] == $constants["ROLE_ADMIN"])
-                                Administrateur
-                            @endif
-                            @if ($participant['role'] == $constants["ROLE_DEV"])
-                                Développeur
-                            @endif
+                           <form role="form" action="settings?id_projet={{$projet->id}}" method="post">
+                             <input type="hidden" name="id_projet" value="{{$projet->id}}">
+                             <input type="hidden" name="id_utilisateur" value="{{$participant["id"]}}">
+                              <select onchange="this.form.submit()" name="role_utilisateur">
+                                @if ($participant['role'] == $constants["ROLE_ADMIN"])
+                                  <option value="7">Administrateur</option>
+                                  <option value="8">Développeur</option>
+                                @endif
+                                @if ($participant['role'] == $constants["ROLE_DEV"])
+                                    <option value="8">Développeur</option>
+                                    <option value="7">Administrateur</option>
+                                @endif
+                              </select>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          </form>
                         </td>
                         <td>
                             @if ($participant['id'] != $utilisateur->id)
@@ -140,6 +156,7 @@
                                 <button type="button" class="btn btn-sm btn-disabled">Supprimer</button>
                             @endif
                         </td>
+
                       </tr>
                   @endforeach
                 </table>
@@ -150,6 +167,66 @@
           </div>
         </div>
         <!-- /.box -->
+
+
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Ajout d'un nouveau package</h3>
+          </div>
+          <!-- /.box-header -->
+          <!-- form start -->
+          <form role="form" action="settings?id_projet={{$projet->id}}" method="post">
+            <div class="box-body">
+              <div class="form-group">
+                    <label for="exampleInputEmaill">Package</label>
+                    <select class="form-control" id="name_package" name="name_package"></select>
+                </div>
+
+
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </form>
+              </div>
+          </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Liste des packages</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                  <tr>
+                    <th>Nom</th>
+                    <th>Action</th>
+                  </tr>
+                  @foreach ($infopackage as $pack)
+                      <tr>
+                        <td>{{$pack["nom_package"]}}</td>
+                        <td><form role="form" action="settings?id_projet={{$projet->id}}" method="post">
+                              <input type="hidden" name="id_projet" value="{{$projet->id}}">
+                              <input type="hidden" name="id_utilisateur" value="{{$participant["id"]}}">
+                              <input type="hidden" name="nom_package" value="{{$pack["nom_package"]}}">
+                              <input type="hidden" name="action" value="delete-package">
+                              <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            </form>
+                      </td>
+                      </tr>
+                   @endforeach
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+        </div>
+        <!-- /.box -->
+
+
 
     </section>
     <!-- /.content -->
@@ -171,6 +248,23 @@
           processResults: function (data) {
             return {
               results: data
+            };
+          }
+        }
+      });
+    });
+    </script>
+    <script>
+    $(function () {
+      $("#name_package").select2({
+        language: "fr",
+        allowClear: true,
+        ajax: {
+          url: "{{ asset('getPackages') }}",
+          dataType: "json",
+          processResults: function (infopackage) {
+            return {
+              results: infopackage
             };
           }
         }
