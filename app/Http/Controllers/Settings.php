@@ -191,10 +191,18 @@ class Settings extends Controller
             }
             if($action == "delete-package")
             {
-              $pack = Package::where('nom', $request->input('nom_package'))->first();
-              CorrespPackage::where('id_package', $pack->id)->where('id_projet', $_GET["id_projet"])->delete();
-
-              return redirect('settings?id_projet='.$_GET["id_projet"]);
+              	$pack = Package::where('nom', $request->input('nom_package'))->first();
+              	$process = new Process(['../docker/delpackage.sh', $projet->port, $pack->nom]);
+              	$return_code = $process->run();
+	      	if($return_code == 0)
+	      	{
+			CorrespPackage::where('id_package', $pack->id)->where('id_projet', $_GET["id_projet"])->delete();
+              	  	return redirect('settings?id_projet='.$_GET["id_projet"]);
+	      	}
+		else
+		{
+			return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["DOCKER_ERROR"]);
+		}
             }
         }
 
@@ -273,13 +281,21 @@ class Settings extends Controller
 
                   if(!isset($verif))
                   {
-
-                    $corresp = new CorrespPackage; //Instanciation d'un objet de type CorrespPackage
-                    $corresp->id_package = $pack->id; //Affectation de l'id du package
-                    $corresp->id_projet = $_GET["id_projet"]; //Affectation de l'id projet
-                    $corresp->save();
-
-                    return redirect('settings?id_projet='.$_GET["id_projet"]);
+		    $projet = M_Projet::where('id', $_GET["id_projet"])->first();
+		    $process = new Process(['../docker/addpackage.sh', $projet->port, $pack->nom]);
+                    $return_code = $process->run();
+		    if($return_code == 0)
+		    {
+                    	$corresp = new CorrespPackage; //Instanciation d'un objet de type CorrespPackage
+                    	$corresp->id_package = $pack->id; //Affectation de l'id du package
+                    	$corresp->id_projet = $_GET["id_projet"]; //Affectation de l'id projet
+                    	$corresp->save();
+			return redirect('settings?id_projet='.$_GET["id_projet"]);
+		    }
+		    else
+		    {
+                    	return redirect('settings?id_projet='.$_GET["id_projet"].'&erreur='.$constants["DOCKER_ERROR"]);
+		    }
                 }
                 else
                 {
