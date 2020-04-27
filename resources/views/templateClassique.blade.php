@@ -22,24 +22,23 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-purple sidebar-mini">
+<body class="skin-purple hold-transition layout-top-nav">
 <div class="wrapper">
 
   <header class="main-header">
-    <!-- Logo -->
-    <a href="/" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><img src="dist/img/logo_min_w.png"></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="dist/img/logo_max_w.png"></span>
-    </a>
+
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
+
+      <!-- Logo -->
+      <a href="/" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><img src="dist/img/logo_min_w.png"></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><img src="dist/img/logo_max_w.png"></span>
       </a>
 
+      <!-- Sidebar toggle button-->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- User Account: style can be found in dropdown.less -->
