@@ -44,6 +44,8 @@ class Accueil extends Controller
                 $iteration["nom"] = $projet["nom"]; //Nom du projet
                 $iteration["role"] = $droit["role"]; //Rôle que l'on joue
                 $iteration["createur"] = $createur["prenom"]." ".$createur["nom"]; //Nom du créateur
+                $iteration["type_projet"] = $projet['type'];
+                $iteration["port"] = $projet['port'];
                 $data[$i] = $iteration; //Ajout au tableau de retour
             }
             //Redirection vers la vue accueil
