@@ -21,8 +21,8 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-sql = "INSERT INTO utilisateur (nom, prenom, email, password, unix_password, status, avatar) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-val = (sys.argv[1], sys.argv[2], "", "", generate(), sys.argv[3], "user2-160x160.jpg")
+sql = "INSERT INTO utilisateur (nom, prenom, email, password, unix_password, status, avatar, mdp_oublier) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+val = (sys.argv[1], sys.argv[2], "", "", generate(), sys.argv[3], "user2-160x160.jpg","")
 mycursor.execute(sql, val)
 
 password = generate()
