@@ -14,6 +14,12 @@
           <p>Vos identifiants sont incorrects</p>
           </div>
       @endif
+      @if (isset($erreur) && $erreur == $constants["CLE_INVALIDE"])
+          <div class="callout callout-danger">
+          <h4>Erreur</h4>
+          <p>L'authentication a échoué veillez effectuer une nouvelle demande de mot de passe oublié</p>
+          </div>
+      @endif
       @if (isset($erreur) && $erreur == $constants["VALID"])
           <div class="callout callout-success">
           <h4>Votre compte à bien été créé</h4>
@@ -39,7 +45,7 @@
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
         </form>
         <br>
-        <a href="#">Mot de passe oublié</a><br>
+        <a href="mdpOublier">Mot de passe oublié</a><br>
         <a href="register" class="text-center">Pas encore inscrit ?</a>
 
       </div>

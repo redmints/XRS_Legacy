@@ -26,6 +26,12 @@ Route::post('login', 'Login@postForm');
 Route::get('register', 'Register@getForm');
 Route::post('register', 'Register@postForm');
 
+Route::get('mdpOublier', 'MdpOublier@getForm');
+Route::post('mdpOublier', 'MdpOublier@postForm');
+
+Route::get('modifMdpOublier','ModifMdpOublier@getForm');
+Route::post('modifMdpOublier','ModifMdpOublier@postForm');
+
 Route::get('modificationCompte','Compte@getForm');
 Route::post('modificationCompte','Compte@postForm');
 
