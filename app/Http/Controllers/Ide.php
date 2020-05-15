@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers;
 use Symfony\Component\Process\Process;
 use Illuminate\Http\Request;
 use Session;
@@ -48,6 +49,7 @@ class Ide extends Controller
                         $droit_createur = Droit::where('id_projet', $projet->id)->where('role', $constants["ROLE_ADMIN"])->first();
                         //Puis on en déduit ses infos
                         $createur = Utilisateur::where('id', $droit_createur->id_utilisateur)->first();
+
                         //Si la machine est éteinte
                         if($projet->port == 0)
                         {
@@ -70,8 +72,13 @@ class Ide extends Controller
                             {
                                 $projet->port = $port;
                                 $projet->save();
+
+                                $dir_project = "/var";
+                                $arborescence_projet = Utils::dir2json($projet->port,$dir_project);
+
+
                                 //Redirection vers la vue ide
-                                return view('ide', compact('utilisateur', 'projet', 'unwanted_array'));
+                                return view('ide', compact('utilisateur', 'projet', 'unwanted_array', 'arborescence_projet'));
                             }
                             else
                             {
@@ -80,7 +87,10 @@ class Ide extends Controller
                         }
                         else
                         {
-                            return view('ide', compact('utilisateur', 'projet', 'unwanted_array'));
+                            $dir_project = "/var";
+                            $arborescence_projet = Utils::dir2json($projet->port,$dir_project);
+
+                            return view('ide', compact('utilisateur', 'projet', 'unwanted_array', 'arborescence_projet'));
                         }
                     }
                     else
