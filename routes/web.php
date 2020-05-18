@@ -41,6 +41,10 @@ Route::post('nouveau-projet', 'NouveauProjet@postForm');
 Route::get('settings', 'Settings@getForm');
 Route::post('settings', 'Settings@postForm');
 
+Route::get('commandeFileSystem', 'CommandeFileSystem@getForm');
+Route::post('commandeFileSystem', 'CommandeFileSystem@postForm');
+
+
 Route::get('getUtilisateurs', 'Utils@getUtilisateurs');
 Route::get('getPackages', 'Utils@getPackages');
 Route::get('keep_alive', 'Utils@setKeepAlive');
