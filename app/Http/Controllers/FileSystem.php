@@ -9,17 +9,19 @@ class FileSystem extends Controller{
 
     private $port;
     private $nomProjet;
-    private $loginConnexion = "root";
-    private $mdpConnexion = "f4212b127a";
+    private $utilisateur;
+    private $mdpConnexion;
     private $connexion;
 
 
-    public function FileSystem($dockerPort,$nomDuProjet){
+    public function FileSystem($dockerPort,$nomDuProjet, $user, $mdp){
         $this->port = $dockerPort;
         $this->nomProjet = $nomDuProjet;
-        $connexion = ssh2_connect("xeyrus.com", $this->port );
-        $this->connexion=$connexion;
-        ssh2_auth_password( $connexion, $this->loginConnexion, $this->mdpConnexion );
+        $this->utilisateur = $user;
+        $this->mdpConnexion = base64_decode($mdp);
+        $conn = ssh2_connect("localhost", $this->port );
+        $this->connexion=$conn;
+        ssh2_auth_password( $conn, $this->utilisateur, $this->mdpConnexion );
     }
 
     public function deplacer($src, $dst){
@@ -49,7 +51,7 @@ class FileSystem extends Controller{
 
     public function nouveauFichier($nom){
 
-        $cmd='touch '.$nom;
+        $cmd='echo " ">  '.$nom;
 
 
         $stream = ssh2_exec($this->connexion, $cmd);
@@ -88,7 +90,7 @@ class FileSystem extends Controller{
         $cmd="rm -fr ".$nom;
 
 
-        $stream = ssh2_exec($this->connexion, $cmd);
+        $stream = ssh2_exec($this->this->this->connexion, $cmd);
         stream_set_blocking($stream,true);
         $stream_out = ssh2_fetch_stream($stream,SSH2_STREAM_STDIO);
         $output = stream_get_contents($stream_out);
@@ -119,7 +121,7 @@ class FileSystem extends Controller{
 
 
     public function close(){
-        ssh2_disconnect($connexion);
+        ssh2_disconnect($this->connexion);
     }
 
 
@@ -128,7 +130,7 @@ class FileSystem extends Controller{
 
         $sftp = ssh2_sftp($this->connexion);
         $sftp_fd = intval($sftp);
-        return ($this->convert("ssh2.sftp://".$sftp_fd.$dirList));
+        return ($this->convert("ssh2.sftp://$sftp_fd".$dirList));
     }
 
 

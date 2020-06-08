@@ -19,12 +19,15 @@ class CommandeFileSystem extends Controller{
     $pathFichier = $request->input('pathFichier');
     $data = $request->input('data');
     $test= $request->input('test');
-    //$fi = $request->input('fileSystem');
+    $port = $request->input('port');
+    $nomProjet= $request->input('nomProjet');
+    $utilisateur = $request->input('utilisateur');
+    $mdp = $request->input('mdp');
     $fi = new FileSystem;
-    $fi->FileSystem('49154','trest');
+    $fi->FileSystem($port,$nomProjet,$utilisateur,$mdp);
 
 
-    if(!empty($action)){ // si l'action n'est pas vide
+    if(!empty($action)){ // si l'action n'est pas vide et l'utilisateur pas inconnu
 
 
 
@@ -114,7 +117,7 @@ class CommandeFileSystem extends Controller{
 
         if($action == "lire-fichier"){
 
-          $fi->lireFichier($pathFichier);
+          return $fi->lireFichier($pathFichier);
 
         }
       }

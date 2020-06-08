@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers;
+
 use Symfony\Component\Process\Process;
 use Illuminate\Http\Request;
 use Session;
@@ -73,8 +74,13 @@ class Ide extends Controller
                                 $projet->port = $port;
                                 $projet->save();
 
-                                $dir_project = "/var";
-                                $arborescence_projet = Utils::dir2json($projet->port,$dir_project);
+                                $user = preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array )));
+                                $mdp = base64_encode(strtolower($utilisateur->unix_password));
+                                $fs = new FileSystem;
+                                $fs->FileSystem($projet->port,$projet->nom,$user,$mdp);
+
+                                $dir_project = "/home/".$user; //.$projet->nom
+                                $arborescence_projet = $fs->dir2json($dir_project);
 
 
                                 //Redirection vers la vue ide
@@ -87,8 +93,13 @@ class Ide extends Controller
                         }
                         else
                         {
-                            $dir_project = "/var";
-                            $arborescence_projet = Utils::dir2json($projet->port,$dir_project);
+                            $user = preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(strtr($utilisateur->prenom, $unwanted_array )).strtolower(strtr($utilisateur->nom, $unwanted_array )));
+                            $mdp = base64_encode(strtolower($utilisateur->unix_password));
+                            $fs = new FileSystem;
+                            $fs->FileSystem($projet->port,$projet->nom,$user,$mdp);
+
+                            $dir_project = "/home/".$user; //.$projet->nom
+                            $arborescence_projet = $fs->dir2json($dir_project);
 
                             return view('ide', compact('utilisateur', 'projet', 'unwanted_array', 'arborescence_projet'));
                         }
